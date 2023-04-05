@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-@Table(name = "reservation_united_part")
+@Table(name = "reservation_united_parts")
 @Entity
 public class ReservationUnitedPart {
 

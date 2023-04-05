@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-@Table(name = "event")
+@Table(name = "events")
 @Entity
 public class Event {
 
@@ -26,8 +26,11 @@ public class Event {
     @Column(name = "start_date", nullable = false)
     private LocalDate startDate;
 
-    @Column(name = "end_date", nullable = false)
+    @Column(name = "end_date")
     private LocalDate endDate;
+
+    @Column(name = "has_end_date", nullable = false)
+    private Boolean hasEndDate;
 
     @Column(name = "event_time")
     private LocalTime time;

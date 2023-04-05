@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-@Table(name = "reservation_offer")
+@Table(name = "reservation_offers")
 @Entity
 public class ReservationOffer {
 

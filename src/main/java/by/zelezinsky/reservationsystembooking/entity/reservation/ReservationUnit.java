@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-@Table(name = "reservation_unit")
+@Table(name = "reservation_units")
 @Entity
 public class ReservationUnit {
 
@@ -26,7 +26,7 @@ public class ReservationUnit {
     private ReservationUnitType type;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reservation_united_part_id")
+    @JoinColumn(name = "reservation_united_part_id", updatable = false, insertable = false)
     private ReservationUnitedPart reservationUnitedPart;
 
     @Column(name = "reservation_united_part_id")
