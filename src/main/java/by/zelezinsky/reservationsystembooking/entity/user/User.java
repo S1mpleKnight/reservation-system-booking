@@ -1,5 +1,6 @@
 package by.zelezinsky.reservationsystembooking.entity.user;
 
+import by.zelezinsky.reservationsystembooking.entity.offer.ReservationOffer;
 import by.zelezinsky.reservationsystembooking.entity.reservation.Reservation;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -44,4 +45,7 @@ public class User {
 
     @Column(name = "is_male", nullable = false)
     private Boolean isMale;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "contact")
+    private List<ReservationOffer> offers;
 }

@@ -2,6 +2,7 @@ package by.zelezinsky.reservationsystembooking.entity.offer;
 
 import by.zelezinsky.reservationsystembooking.entity.reservation.ReservationUnit;
 import by.zelezinsky.reservationsystembooking.entity.reservation.ReservationUnitedPart;
+import by.zelezinsky.reservationsystembooking.entity.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -19,7 +20,7 @@ public class ReservationOffer {
     @Column(name = "id", nullable = false)
     private UUID id = UUID.randomUUID();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_id", nullable = false, insertable = false, updatable = false)
     private Event event;
 
@@ -55,4 +56,26 @@ public class ReservationOffer {
 
     @Column(name = "additional_info_id", nullable = false)
     private UUID additionalInfoId;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type", nullable = false)
+    private ReservationType type;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "offer_status", nullable = false)
+    private ReservationOfferStatus offerStatus;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false, insertable = false, updatable = false)
+    private User contact;
+
+    @Column(name = "user_id", nullable = false)
+    private UUID contactId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "establishment_id", nullable = false, insertable = false, updatable = false)
+    private Establishment establishment;
+
+    @Column(name = "establishment_id", nullable = false)
+    private UUID establishmentId;
 }

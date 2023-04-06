@@ -4,6 +4,7 @@ import by.zelezinsky.reservationsystembooking.entity.offer.ReservationOffer;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,6 +19,12 @@ public class ReservationUnitedPart {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "has_time")
+    private Boolean hasTime;
+
+    @Column(name = "reservation_time")
+    private LocalTime time;
 
     @OneToMany(mappedBy = "reservationUnitedPart", fetch = FetchType.LAZY)
     private List<ReservationUnit> units;

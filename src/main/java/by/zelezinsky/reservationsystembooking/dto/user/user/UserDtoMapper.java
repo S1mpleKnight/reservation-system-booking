@@ -10,21 +10,24 @@ import org.mapstruct.MappingTarget;
 public interface UserDtoMapper {
 
     @Mapping(target = "password", ignore = true)
-    @Mapping(target = "roleId", source = "role.id")
+    @Mapping(target = "roleId", source = "user.role.id")
     UserDto toDto(User user);
 
     UserPreviewDto toPreviewDto(User user);
 
     @Mapping(target = "reservations", ignore = true)
     @Mapping(target = "role", ignore = true)
+    @Mapping(target = "offers", ignore = true)
     User toEntity(UserDto dto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "reservations", ignore = true)
     @Mapping(target = "role", ignore = true)
+    @Mapping(target = "offers", ignore = true)
     User toEntity(@MappingTarget User user, UserDto dto);
 
     @Mapping(target = "reservations", ignore = true)
     @Mapping(target = "role", ignore = true)
+    @Mapping(target = "offers", ignore = true)
     User toEntity(UserPreviewDto dto);
 }

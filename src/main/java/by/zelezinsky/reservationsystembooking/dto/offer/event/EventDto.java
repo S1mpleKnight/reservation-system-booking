@@ -1,13 +1,10 @@
 package by.zelezinsky.reservationsystembooking.dto.offer.event;
 
-import by.zelezinsky.reservationsystembooking.dto.offer.establishment.EstablishmentDto;
-import by.zelezinsky.reservationsystembooking.entity.offer.Establishment;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -44,9 +41,4 @@ public class EventDto {
 
     @NotNull(message = "Time flag can not be null")
     private Boolean hasTime;
-
-    private EstablishmentDto establishment;
-
-    @NotNull(message = "Establishment can not be empty")
-    private UUID establishmentId;
 }

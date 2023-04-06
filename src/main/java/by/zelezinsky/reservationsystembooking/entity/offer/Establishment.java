@@ -54,5 +54,5 @@ public class Establishment {
     private Boolean hasApartment;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "establishment")
-    private List<Event> events;
+    private List<ReservationOffer> offers;
 }

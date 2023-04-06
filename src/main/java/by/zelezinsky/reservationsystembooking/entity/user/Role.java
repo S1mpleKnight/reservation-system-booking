@@ -12,7 +12,7 @@ import java.util.UUID;
 public class Role {
 
     @Id
-    @Column(insertable = false, updatable = false, name = "id")
+    @Column(name = "id", nullable = false)
     private UUID id = UUID.randomUUID();
 
     @Column(name = "name", nullable = false)

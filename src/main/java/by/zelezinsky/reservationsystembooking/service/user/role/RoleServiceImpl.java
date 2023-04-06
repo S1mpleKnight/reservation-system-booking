@@ -56,6 +56,6 @@ public class RoleServiceImpl implements RoleService {
     }
 
     private Role findRole(UUID id) {
-        return roleRepository.findById(id).orElseThrow(() -> new NotFoundException("Role not found"));
+        return roleRepository.findById(id).orElseThrow(() -> new NotFoundException("Role", id.toString()));
     }
 }

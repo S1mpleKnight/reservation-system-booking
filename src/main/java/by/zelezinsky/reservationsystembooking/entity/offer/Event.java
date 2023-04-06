@@ -5,7 +5,6 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -38,13 +37,6 @@ public class Event {
     @Column(name = "has_time", nullable = false)
     private Boolean hasTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "establishment_id", nullable = false, insertable = false, updatable = false)
-    private Establishment establishment;
-
-    @Column(name = "establishment_id", nullable = false)
-    private UUID establishmentId;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "event")
-    private List<ReservationOffer> offers;
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "event")
+    private ReservationOffer offer;
 }

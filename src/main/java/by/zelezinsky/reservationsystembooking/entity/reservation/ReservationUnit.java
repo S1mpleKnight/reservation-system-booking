@@ -4,6 +4,7 @@ import by.zelezinsky.reservationsystembooking.entity.offer.ReservationOffer;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalTime;
 import java.util.UUID;
 
 @Data
@@ -20,10 +21,6 @@ public class ReservationUnit {
 
     @Column(name = "name", nullable = false)
     private String name;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "type", nullable = false)
-    private ReservationUnitType type;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_united_part_id", updatable = false, insertable = false)
@@ -45,4 +42,20 @@ public class ReservationUnit {
 
     @Column(name = "reservation_offer_id")
     private UUID offerId;
+
+    @Column(name = "reservation_time")
+    private LocalTime time;
+
+    @Column(name = "has_time", nullable = false)
+    private Boolean hasTime;
+
+    @Column(name = "order_number")
+    private Integer orderNumber;
+
+    @Column(name = "has_order_number", nullable = false)
+    private Boolean hasOrderNumber;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reservation_unit_type_id")
+    private ReservationUnitType reservationUnitType;
 }

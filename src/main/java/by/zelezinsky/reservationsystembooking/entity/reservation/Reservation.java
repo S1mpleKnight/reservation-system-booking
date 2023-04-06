@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-@Table(name = "RESERVATIONS")
+@Table(name = "reservations")
 @Entity
 public class Reservation {
 
