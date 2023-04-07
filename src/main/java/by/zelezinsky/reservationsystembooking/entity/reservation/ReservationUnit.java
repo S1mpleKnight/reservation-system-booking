@@ -55,6 +55,9 @@ public class ReservationUnit {
     @Column(name = "has_order_number", nullable = false)
     private Boolean hasOrderNumber;
 
+    @Column(name = "has_reservation_unit_type", nullable = false)
+    private Boolean hasReservationUnitType;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_unit_type_id")
     private ReservationUnitType reservationUnitType;

@@ -20,8 +20,11 @@ public class ReservationOffer {
     @Column(name = "id", nullable = false)
     private UUID id = UUID.randomUUID();
 
+    @Column(name = "has_event", nullable = false)
+    private Boolean hasEvent;
+
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "event_id", insertable = false, updatable = false)
     private Event event;
 
     @Column(name = "event_id")
@@ -50,11 +53,14 @@ public class ReservationOffer {
     )
     private List<OfferCategory> categories;
 
+    @Column(name = "has_additional_info", nullable = false)
+    private Boolean hasAdditionalInfo;
+
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "additional_info_id", nullable = false, updatable = false, insertable = false)
+    @JoinColumn(name = "additional_info_id", updatable = false, insertable = false)
     private AdditionalOfferInfo additionalInfo;
 
-    @Column(name = "additional_info_id", nullable = false)
+    @Column(name = "additional_info_id")
     private UUID additionalInfoId;
 
     @Enumerated(EnumType.STRING)
@@ -72,10 +78,13 @@ public class ReservationOffer {
     @Column(name = "user_id", nullable = false)
     private UUID contactId;
 
+    @Column(name = "has_establishment", nullable = false)
+    private Boolean hasEstablishment;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "establishment_id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "establishment_id", insertable = false, updatable = false)
     private Establishment establishment;
 
-    @Column(name = "establishment_id", nullable = false)
+    @Column(name = "establishment_id")
     private UUID establishmentId;
 }
