@@ -8,4 +8,6 @@ import java.util.UUID;
 
 @Repository
 public interface OfferCategoryRepository extends JpaRepository<OfferCategory, UUID> {
+
+    Boolean existsByName(String name);
 }
