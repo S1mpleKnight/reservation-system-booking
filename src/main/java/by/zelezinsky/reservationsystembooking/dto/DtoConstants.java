@@ -10,4 +10,5 @@ public interface DtoConstants {
     String COUNTRY_REGEXP = "[a-zA-Z]{2,60}";
     String BUILDING_REGEXP = "[a-zA-Z[0-9]]{1,5}";
     String APARTMENT_REGEXP = "[0-9]{1,5}([a-zA-Z]{1})?";
+    String DESCRIPTION_REGEXP = "[a-zA-Z[0-9] ]{0,255}";
 }

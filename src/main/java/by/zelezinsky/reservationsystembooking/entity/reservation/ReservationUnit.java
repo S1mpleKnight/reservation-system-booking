@@ -14,7 +14,7 @@ public class ReservationUnit {
 
     @Id
     @Column(name = "id", nullable = false)
-    private UUID id;
+    private UUID id = UUID.randomUUID();
 
     @Column(name = "description")
     private String description;
@@ -37,23 +37,23 @@ public class ReservationUnit {
     private UUID reservationId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reservation_offer_id", updatable = false, insertable = false)
+    @JoinColumn(name = "reservation_offer_id", nullable = false, updatable = false, insertable = false)
     private ReservationOffer offer;
 
-    @Column(name = "reservation_offer_id")
+    @Column(name = "reservation_offer_id", nullable = false)
     private UUID offerId;
-
-    @Column(name = "reservation_time")
-    private LocalTime time;
 
     @Column(name = "has_time", nullable = false)
     private Boolean hasTime;
 
-    @Column(name = "order_number")
-    private Integer orderNumber;
+    @Column(name = "reservation_time")
+    private LocalTime time;
 
     @Column(name = "has_order_number", nullable = false)
     private Boolean hasOrderNumber;
+
+    @Column(name = "order_number")
+    private Integer orderNumber;
 
     @Column(name = "has_reservation_unit_type", nullable = false)
     private Boolean hasReservationUnitType;

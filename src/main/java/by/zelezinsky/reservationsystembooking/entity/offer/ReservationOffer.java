@@ -1,6 +1,7 @@
 package by.zelezinsky.reservationsystembooking.entity.offer;
 
 import by.zelezinsky.reservationsystembooking.entity.reservation.ReservationUnit;
+import by.zelezinsky.reservationsystembooking.entity.reservation.ReservationUnitType;
 import by.zelezinsky.reservationsystembooking.entity.reservation.ReservationUnitedPart;
 import by.zelezinsky.reservationsystembooking.entity.user.User;
 import jakarta.persistence.*;
@@ -56,16 +57,13 @@ public class ReservationOffer {
     @Column(name = "has_additional_info", nullable = false)
     private Boolean hasAdditionalInfo;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "additional_info_id", updatable = false, insertable = false)
-    private AdditionalOfferInfo additionalInfo;
-
-    @Column(name = "additional_info_id")
-    private UUID additionalInfoId;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "reservation_type", nullable = false)
+    private ReservationType reservationType;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "type", nullable = false)
-    private ReservationType type;
+    @Column(name = "order_type", nullable = false)
+    private OrderReservationType orderType;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "offer_status", nullable = false)
@@ -87,4 +85,10 @@ public class ReservationOffer {
 
     @Column(name = "establishment_id")
     private UUID establishmentId;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "offer")
+    private AdditionalOfferInfo info;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "offer")
+    private List<ReservationUnitType> types;
 }
