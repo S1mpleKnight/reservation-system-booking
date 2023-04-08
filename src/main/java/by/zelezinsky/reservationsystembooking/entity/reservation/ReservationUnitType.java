@@ -1,5 +1,6 @@
 package by.zelezinsky.reservationsystembooking.entity.reservation;
 
+import by.zelezinsky.reservationsystembooking.entity.offer.ReservationOffer;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -20,4 +21,11 @@ public class ReservationUnitType {
 
     @OneToMany(mappedBy = "reservationUnitType", fetch = FetchType.LAZY)
     private List<ReservationUnit> units;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reservation_offer_id", nullable = false, insertable = false, updatable = false)
+    private ReservationOffer offer;
+
+    @Column(name = "reservation_offer_id", nullable = false)
+    private UUID offerId;
 }
