@@ -1,9 +1,6 @@
 package by.zelezinsky.reservationsystembooking.entity.offer;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.UUID;
@@ -25,4 +22,11 @@ public class AdditionalOfferInfo {
 
     @Column(name = "event_url")
     private String eventUrl;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "offer_id", nullable = false, insertable = false, updatable = false)
+    private ReservationOffer offer;
+
+    @Column(name = "offer_id", nullable = false)
+    private UUID offerId;
 }
