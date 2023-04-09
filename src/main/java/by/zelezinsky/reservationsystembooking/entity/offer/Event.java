@@ -1,10 +1,12 @@
 package by.zelezinsky.reservationsystembooking.entity.offer;
 
+import by.zelezinsky.reservationsystembooking.entity.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -37,6 +39,13 @@ public class Event {
     @Column(name = "has_time", nullable = false)
     private Boolean hasTime;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "event")
-    private ReservationOffer offer;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "event")
+    private List<ReservationOffer> offer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false, updatable = false, insertable = false)
+    private User contact;
+
+    @Column(name = "user_id")
+    private UUID contactId;
 }

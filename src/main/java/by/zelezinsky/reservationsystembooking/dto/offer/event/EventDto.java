@@ -1,5 +1,6 @@
 package by.zelezinsky.reservationsystembooking.dto.offer.event;
 
+import by.zelezinsky.reservationsystembooking.dto.user.user.UserDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -41,4 +42,8 @@ public class EventDto {
 
     @NotNull(message = "Time flag can not be null")
     private Boolean hasTime;
+
+    private UUID contactId;
+
+    private UserDto contact;
 }

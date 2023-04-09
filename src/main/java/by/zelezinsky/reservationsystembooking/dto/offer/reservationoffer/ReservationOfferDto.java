@@ -51,6 +51,8 @@ public class ReservationOfferDto {
 
     private List<OfferCategoryDto> categories;
 
+    private List<UUID> categoryIds;
+
     @NotNull(message = "Info flag can not be empty")
     private Boolean hasAdditionalInfo;
 

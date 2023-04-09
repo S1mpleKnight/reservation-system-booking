@@ -24,7 +24,7 @@ public class ReservationOffer {
     @Column(name = "has_event", nullable = false)
     private Boolean hasEvent;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_id", insertable = false, updatable = false)
     private Event event;
 
@@ -54,9 +54,6 @@ public class ReservationOffer {
     )
     private List<OfferCategory> categories;
 
-    @Column(name = "has_additional_info", nullable = false)
-    private Boolean hasAdditionalInfo;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "reservation_type", nullable = false)
     private ReservationType reservationType;
@@ -85,6 +82,9 @@ public class ReservationOffer {
 
     @Column(name = "establishment_id")
     private UUID establishmentId;
+
+    @Column(name = "has_additional_info", nullable = false)
+    private Boolean hasAdditionalInfo;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "offer")
     private AdditionalOfferInfo info;
