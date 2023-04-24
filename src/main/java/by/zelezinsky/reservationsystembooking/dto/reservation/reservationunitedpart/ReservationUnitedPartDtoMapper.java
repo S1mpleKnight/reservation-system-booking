@@ -3,6 +3,7 @@ package by.zelezinsky.reservationsystembooking.dto.reservation.reservationunited
 import by.zelezinsky.reservationsystembooking.entity.reservation.ReservationUnitedPart;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface ReservationUnitedPartDtoMapper {

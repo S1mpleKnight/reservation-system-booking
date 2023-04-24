@@ -22,6 +22,9 @@ public class ReservationUnitedPart {
     @OneToMany(mappedBy = "reservationUnitedPart", fetch = FetchType.LAZY)
     private List<ReservationUnit> units;
 
+    @Column(name = "has_parent", nullable = false)
+    private Boolean hasParent;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id", insertable = false, updatable = false)
     private ReservationUnitedPart parent;
