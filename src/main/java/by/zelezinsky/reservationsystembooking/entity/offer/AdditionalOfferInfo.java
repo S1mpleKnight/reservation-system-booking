@@ -23,7 +23,7 @@ public class AdditionalOfferInfo {
     @Column(name = "event_url")
     private String eventUrl;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "offer_id", nullable = false, insertable = false, updatable = false)
     private ReservationOffer offer;
 
