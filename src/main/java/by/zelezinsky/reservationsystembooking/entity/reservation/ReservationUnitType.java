@@ -22,7 +22,7 @@ public class ReservationUnitType {
     @OneToMany(mappedBy = "reservationUnitType", fetch = FetchType.LAZY)
     private List<ReservationUnit> units;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "reservation_offer_id", nullable = false, insertable = false, updatable = false)
     private ReservationOffer offer;
 

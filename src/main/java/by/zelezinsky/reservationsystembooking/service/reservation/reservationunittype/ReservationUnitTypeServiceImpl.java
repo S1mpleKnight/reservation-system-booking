@@ -37,7 +37,7 @@ public class ReservationUnitTypeServiceImpl implements ReservationUnitTypeServic
     @Override
     public ReservationUnitTypeDto update(UUID offerId, UUID id, ReservationUnitTypeDto dto) {
         ReservationOffer offer = findOffer(offerId);
-        ReservationUnitType type = findType(id);
+        ReservationUnitType type = findType(offer, id);
         if (unitTypeRepository.existsByNameAndOfferId(dto.getName(), id)) {
             throw new BadRequestException("Unit type with that name already exists");
         }
@@ -47,18 +47,21 @@ public class ReservationUnitTypeServiceImpl implements ReservationUnitTypeServic
     }
 
     @Override
-    public ReservationUnitTypeDto findById(UUID id) {
-        return dtoMapper.toDto(findType(id));
+    public ReservationUnitTypeDto findById(UUID id, UUID uuid) {
+        ReservationOffer offer = findOffer(id);
+        return dtoMapper.toDto(findType(offer, uuid));
     }
 
     @Override
-    public Page<ReservationUnitTypeDto> findAll(Pageable pageable) {
-        return unitTypeRepository.findAll(pageable).map(dtoMapper::toDto);
+    public Page<ReservationUnitTypeDto> findAll(UUID id, Pageable pageable) {
+        ReservationOffer offer = findOffer(id);
+        return unitTypeRepository.findAllByOffer(offer, pageable).map(dtoMapper::toDto);
     }
 
     @Override
-    public void delete(UUID id) {
-        ReservationUnitType type = findType(id);
+    public void delete(UUID id, UUID uuid) {
+        ReservationOffer offer = findOffer(id);
+        ReservationUnitType type = findType(offer, uuid);
         unitTypeRepository.delete(type);
     }
 
@@ -67,8 +70,8 @@ public class ReservationUnitTypeServiceImpl implements ReservationUnitTypeServic
                 .orElseThrow(() -> new NotFoundException("Reservation offer", id.toString()));
     }
 
-    private ReservationUnitType findType(UUID id) {
-        return unitTypeRepository.findById(id)
+    private ReservationUnitType findType(ReservationOffer offer, UUID id) {
+        return unitTypeRepository.findByOfferAndId(offer, id)
                 .orElseThrow(() -> new NotFoundException("Reservation unit type", id.toString()));
     }
 }

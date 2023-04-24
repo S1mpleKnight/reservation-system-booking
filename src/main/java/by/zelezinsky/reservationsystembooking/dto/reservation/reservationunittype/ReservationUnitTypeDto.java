@@ -3,11 +3,13 @@ package by.zelezinsky.reservationsystembooking.dto.reservation.reservationunitty
 import by.zelezinsky.reservationsystembooking.dto.DtoConstants;
 import lombok.Data;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.util.UUID;
 
 @Data
+@Valid
 public class ReservationUnitTypeDto {
 
     private UUID id;

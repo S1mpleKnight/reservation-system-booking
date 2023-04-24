@@ -22,19 +22,12 @@ public class ReservationUnit {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "reservation_united_part_id", updatable = false, insertable = false)
     private ReservationUnitedPart reservationUnitedPart;
 
     @Column(name = "reservation_united_part_id")
     private UUID reservationUnitedPartId;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reservation_id", nullable = false, updatable = false, insertable = false)
-    private Reservation reservation;
-
-    @Column(name = "reservation_id", nullable = false)
-    private UUID reservationId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_offer_id", nullable = false, updatable = false, insertable = false)
