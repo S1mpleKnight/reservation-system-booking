@@ -19,5 +19,5 @@ public interface ReservationOfferService {
 
     void delete(UUID id);
 
-    ReservationOfferDto changeStatus(UUID id, UUID contactId, ReservationOfferStatus status);
+    ReservationOfferDto changeStatusAndContact(UUID id, UUID contactId, ReservationOfferStatus status);
 }

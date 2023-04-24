@@ -13,6 +13,7 @@ import by.zelezinsky.reservationsystembooking.entity.offer.ReservationType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -24,6 +25,7 @@ import static by.zelezinsky.reservationsystembooking.dto.DtoConstants.DATE_REGEX
 import static by.zelezinsky.reservationsystembooking.dto.DtoConstants.TIME_REGEXP;
 
 @Data
+@Valid
 public class ReservationOfferDto {
 
     private UUID id;
@@ -77,5 +79,5 @@ public class ReservationOfferDto {
 
     private UUID establishmentId;
 
-    private AdditionalOfferInfoDto info;
+    private AdditionalOfferInfoDto additionalOfferInfo;
 }

@@ -8,8 +8,10 @@ import by.zelezinsky.reservationsystembooking.dto.reservation.reservationunittyp
 import by.zelezinsky.reservationsystembooking.dto.user.user.UserDtoMapper;
 import by.zelezinsky.reservationsystembooking.entity.offer.OfferCategory;
 import by.zelezinsky.reservationsystembooking.entity.offer.ReservationOffer;
+import by.zelezinsky.reservationsystembooking.entity.offer.ReservationOfferStatus;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 import java.util.List;
 import java.util.UUID;
@@ -35,6 +37,19 @@ public interface ReservationOfferDtoMapper {
     @Mapping(target = "unitedParts", ignore = true)
     @Mapping(target = "reservationUnits", ignore = true)
     ReservationOffer toEntity(ReservationOfferDto dto);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "eventId", ignore = true)
+    @Mapping(target = "contact", ignore = true)
+    @Mapping(target = "contactId", ignore = true)
+    @Mapping(target = "establishment", ignore = true)
+    @Mapping(target = "establishmentId", ignore = true)
+    @Mapping(target = "info", ignore = true)
+    @Mapping(target = "types", ignore = true)
+    @Mapping(target = "categories", ignore = true)
+    @Mapping(target = "unitedParts", ignore = true)
+    @Mapping(target = "reservationUnits", ignore = true)
+    ReservationOffer toEntity(@MappingTarget ReservationOffer offer, ReservationOfferDto dto);
 
     @Mapping(target = "categoryIds", qualifiedByName = CATEGORY_IDS_QUALIFIER)
     ReservationOfferDto toDto(ReservationOffer offer);
