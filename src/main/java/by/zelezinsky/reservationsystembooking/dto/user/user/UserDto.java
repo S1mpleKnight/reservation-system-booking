@@ -4,6 +4,7 @@ import by.zelezinsky.reservationsystembooking.dto.user.role.RoleDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -14,6 +15,7 @@ import java.util.UUID;
 import static by.zelezinsky.reservationsystembooking.dto.DtoConstants.*;
 
 @Data
+@Valid
 public class UserDto {
 
     @NotBlank(message = "Username can not be empty")
