@@ -4,6 +4,7 @@ import by.zelezinsky.reservationsystembooking.dto.offer.establishment.Establishm
 import by.zelezinsky.reservationsystembooking.dto.offer.establishment.EstablishmentDtoMapper;
 import by.zelezinsky.reservationsystembooking.entity.offer.Establishment;
 import by.zelezinsky.reservationsystembooking.entity.user.User;
+import by.zelezinsky.reservationsystembooking.exception.BadRequestException;
 import by.zelezinsky.reservationsystembooking.exception.NotFoundException;
 import by.zelezinsky.reservationsystembooking.repository.offer.EstablishmentRepository;
 import by.zelezinsky.reservationsystembooking.repository.user.UserRepository;
@@ -25,6 +26,10 @@ public class EstablishmentServiceImpl implements EstablishmentService {
     @Override
     public EstablishmentDto create(EstablishmentDto dto) {
         User user = findUser(dto.getContactId());
+        if (establishmentRepository.existsByCountryAndCityAndStreetAndBuildingAndApartment(dto.getCountry(),
+                dto.getCity(), dto.getStreet(), dto.getBuilding(), dto.getApartment())) {
+            throw new BadRequestException("Such an establishment is already exists");
+        }
         Establishment entity = establishmentDtoMapper.toEntity(dto);
         entity.setContactId(user.getId());
         return establishmentDtoMapper.toDto(establishmentRepository.save(entity));
@@ -34,6 +39,10 @@ public class EstablishmentServiceImpl implements EstablishmentService {
     public EstablishmentDto update(UUID id, EstablishmentDto dto) {
         Establishment establishment = findEstablishment(id);
         User user = findUser(dto.getContactId());
+        if (establishmentRepository.existsByCountryAndCityAndStreetAndBuildingAndApartment(dto.getCountry(),
+                dto.getCity(), dto.getStreet(), dto.getBuilding(), dto.getApartment())) {
+            throw new BadRequestException("Such an establishment is already exists");
+        }
         establishment = establishmentDtoMapper.toEntity(establishment, dto);
         establishment.setContactId(user.getId());
         return establishmentDtoMapper.toDto(establishmentRepository.save(establishment));
