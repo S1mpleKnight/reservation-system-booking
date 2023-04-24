@@ -3,11 +3,13 @@ package by.zelezinsky.reservationsystembooking.dto.offer.category;
 import by.zelezinsky.reservationsystembooking.dto.DtoConstants;
 import lombok.Data;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.util.UUID;
 
 @Data
+@Valid
 public class OfferCategoryDto {
 
     private UUID id;
