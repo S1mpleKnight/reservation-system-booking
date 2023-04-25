@@ -8,10 +8,10 @@ import by.zelezinsky.reservationsystembooking.dto.reservation.reservationunittyp
 import by.zelezinsky.reservationsystembooking.dto.user.user.UserDtoMapper;
 import by.zelezinsky.reservationsystembooking.entity.offer.OfferCategory;
 import by.zelezinsky.reservationsystembooking.entity.offer.ReservationOffer;
-import by.zelezinsky.reservationsystembooking.entity.offer.ReservationOfferStatus;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
 
 import java.util.List;
 import java.util.UUID;
@@ -51,9 +51,10 @@ public interface ReservationOfferDtoMapper {
     @Mapping(target = "reservationUnits", ignore = true)
     ReservationOffer toEntity(@MappingTarget ReservationOffer offer, ReservationOfferDto dto);
 
-    @Mapping(target = "categoryIds", qualifiedByName = CATEGORY_IDS_QUALIFIER)
+    @Mapping(target = "categoryIds", qualifiedByName = CATEGORY_IDS_QUALIFIER, source = "offer")
     ReservationOfferDto toDto(ReservationOffer offer);
 
+    @Named(CATEGORY_IDS_QUALIFIER)
     default List<UUID> getCategoryIds(ReservationOffer offer) {
         return offer.getCategories().stream().map(OfferCategory::getId).collect(Collectors.toList());
     }
