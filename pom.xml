@@ -96,13 +96,15 @@
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-apt</artifactId>
             <version>${querydsl-set.version}</version>
-            <classifier>jpa</classifier>
+            <classifier>jakarta</classifier>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-jpa</artifactId>
             <version>${querydsl-set.version}</version>
+            <classifier>jakarta</classifier>
         </dependency>
     </dependencies>
 
