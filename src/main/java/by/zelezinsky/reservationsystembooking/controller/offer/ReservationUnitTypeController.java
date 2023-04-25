@@ -2,7 +2,7 @@ package by.zelezinsky.reservationsystembooking.controller.offer;
 
 import by.zelezinsky.reservationsystembooking.controller.Url;
 import by.zelezinsky.reservationsystembooking.dto.reservation.reservationunittype.ReservationUnitTypeDto;
-import by.zelezinsky.reservationsystembooking.service.reservation.reservationunittype.ReservationUnitTypeService;
+import by.zelezinsky.reservationsystembooking.service.reservation.unittype.ReservationUnitTypeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

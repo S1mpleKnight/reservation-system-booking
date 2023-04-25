@@ -1,4 +1,4 @@
-package by.zelezinsky.reservationsystembooking.service.reservation.reservationunittype;
+package by.zelezinsky.reservationsystembooking.service.reservation.unittype;
 
 import by.zelezinsky.reservationsystembooking.dto.reservation.reservationunittype.ReservationUnitTypeDto;
 import by.zelezinsky.reservationsystembooking.dto.reservation.reservationunittype.ReservationUnitTypeDtoMapper;

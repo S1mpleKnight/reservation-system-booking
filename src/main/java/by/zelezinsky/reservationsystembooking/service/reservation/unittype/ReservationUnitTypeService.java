@@ -1,4 +1,4 @@
-package by.zelezinsky.reservationsystembooking.service.reservation.reservationunittype;
+package by.zelezinsky.reservationsystembooking.service.reservation.unittype;
 
 import by.zelezinsky.reservationsystembooking.dto.reservation.reservationunittype.ReservationUnitTypeDto;
 import org.springframework.data.domain.Page;
@@ -12,9 +12,9 @@ public interface ReservationUnitTypeService {
 
     ReservationUnitTypeDto update(UUID offerId, UUID id, ReservationUnitTypeDto dto);
 
-    ReservationUnitTypeDto findById(UUID id);
+    ReservationUnitTypeDto findById(UUID id, UUID uuid);
 
-    Page<ReservationUnitTypeDto> findAll(Pageable pageable);
+    Page<ReservationUnitTypeDto> findAll(UUID id, Pageable pageable);
 
-    void delete(UUID id);
+    void delete(UUID id, UUID uuid);
 }
