@@ -15,11 +15,15 @@ public interface ReservationDtoMapper {
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "userId", ignore = true)
     @Mapping(target = "units", ignore = true)
+    @Mapping(target = "reservationDate", ignore = true)
+    @Mapping(target = "reservationTime", ignore = true)
     Reservation toEntity(ReservationDto dto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "userId", ignore = true)
     @Mapping(target = "units", ignore = true)
+    @Mapping(target = "reservationDate", ignore = true)
+    @Mapping(target = "reservationTime", ignore = true)
     Reservation toEntity(@MappingTarget Reservation reservation, ReservationDto dto);
 }

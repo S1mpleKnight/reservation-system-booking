@@ -21,6 +21,9 @@ public class ReservationOffer {
     @Column(name = "id", nullable = false)
     private UUID id = UUID.randomUUID();
 
+    @Column(name = "name", nullable = false)
+    private String name;
+
     @Column(name = "has_event", nullable = false)
     private Boolean hasEvent;
 
