@@ -1,4 +1,4 @@
-package by.zelezinsky.reservationsystembooking.service.reservation.reservationunitedpart;
+package by.zelezinsky.reservationsystembooking.service.reservation.unitedpart;
 
 import by.zelezinsky.reservationsystembooking.dto.reservation.reservationunitedpart.ReservationUnitedPartDto;
 import by.zelezinsky.reservationsystembooking.dto.reservation.reservationunitedpart.ReservationUnitedPartDtoMapper;

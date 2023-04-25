@@ -32,6 +32,11 @@ public interface Url {
             String BASE = "parts/";
             String FULL = ReservationOffer.BASE + ID + "/" + BASE;
         }
+
+        interface Unit {
+            String BASE = "units/";
+            String FULL = ReservationOffer.BASE + ID + "/" + BASE;
+        }
     }
 
 
