@@ -60,4 +60,11 @@ public class ReservationUnit {
 
     @Column(name = "reservation_unit_type_id")
     private UUID reservationUnitTypeId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reservation_id", updatable = false, insertable = false)
+    private Reservation reservation;
+
+    @Column(name = "reservation_id")
+    private UUID reservationId;
 }

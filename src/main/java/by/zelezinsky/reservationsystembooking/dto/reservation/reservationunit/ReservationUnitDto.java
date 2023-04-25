@@ -1,6 +1,7 @@
 package by.zelezinsky.reservationsystembooking.dto.reservation.reservationunit;
 
 import by.zelezinsky.reservationsystembooking.dto.DtoConstants;
+import by.zelezinsky.reservationsystembooking.dto.reservation.ReservationDto;
 import by.zelezinsky.reservationsystembooking.dto.reservation.reservationunittype.ReservationUnitTypeDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -31,8 +32,6 @@ public class ReservationUnitDto {
 
     private UUID reservationUnitedPartId;
 
-    private UUID reservationId;
-
     @NotBlank(message = "Offer can not be null")
     private UUID offerId;
 
@@ -53,4 +52,8 @@ public class ReservationUnitDto {
     private ReservationUnitTypeDto reservationUnitType;
 
     private UUID reservationUnitTypeId;
+
+    private UUID reservationId;
+
+    private ReservationDto reservation;
 }

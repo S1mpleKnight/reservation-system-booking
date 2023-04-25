@@ -39,8 +39,11 @@ public interface Url {
         }
     }
 
-
     interface Establishment {
         String BASE = "establishments/";
+    }
+
+    interface Reservation {
+        String BASE = "reservations/";
     }
 }

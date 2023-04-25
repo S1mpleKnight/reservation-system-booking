@@ -4,7 +4,9 @@ import by.zelezinsky.reservationsystembooking.entity.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,8 +26,11 @@ public class Reservation {
     @Column(name = "user_id", nullable = false)
     private UUID userId;
 
-    @Column(name = "reservation_date_time")
-    private LocalDateTime dateTime;
+    @Column(name = "reservation_date", nullable = false)
+    private LocalDate reservationDate;
+
+    @Column(name = "reservation_time", nullable = false)
+    private LocalTime reservationTime;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
