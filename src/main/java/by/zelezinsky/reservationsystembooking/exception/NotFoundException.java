@@ -1,7 +1,6 @@
 package by.zelezinsky.reservationsystembooking.exception;
 
 import java.util.List;
-import java.util.UUID;
 
 public class NotFoundException extends RuntimeException {
     public NotFoundException(String entityName, String id) {
