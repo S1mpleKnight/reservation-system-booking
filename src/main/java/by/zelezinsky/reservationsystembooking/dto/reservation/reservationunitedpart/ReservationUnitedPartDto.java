@@ -4,12 +4,14 @@ import by.zelezinsky.reservationsystembooking.dto.DtoConstants;
 import by.zelezinsky.reservationsystembooking.dto.reservation.reservationunit.ReservationUnitDto;
 import lombok.Data;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.List;
 import java.util.UUID;
 
 @Data
+@Valid
 public class ReservationUnitedPartDto {
 
     private UUID id;
