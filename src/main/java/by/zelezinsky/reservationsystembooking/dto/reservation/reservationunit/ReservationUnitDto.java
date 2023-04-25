@@ -5,6 +5,7 @@ import by.zelezinsky.reservationsystembooking.dto.reservation.reservationunittyp
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -12,6 +13,7 @@ import java.time.LocalTime;
 import java.util.UUID;
 
 @Data
+@Valid
 public class ReservationUnitDto {
 
     private UUID id;
@@ -23,6 +25,9 @@ public class ReservationUnitDto {
     @NotBlank(message = "Name can not be empty")
     @Pattern(regexp = DtoConstants.NAME_REGEXP, message = "Name should be between 1 and 50 letters")
     private String name;
+
+    @NotNull(message = "United part falg can not be empty")
+    private Boolean hasUnitedPart;
 
     private UUID reservationUnitedPartId;
 
@@ -46,4 +51,6 @@ public class ReservationUnitDto {
     private Boolean hasReservationUnitType;
 
     private ReservationUnitTypeDto reservationUnitType;
+
+    private UUID reservationUnitTypeId;
 }

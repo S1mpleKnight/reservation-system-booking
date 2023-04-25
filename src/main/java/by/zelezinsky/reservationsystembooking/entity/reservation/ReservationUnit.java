@@ -22,6 +22,9 @@ public class ReservationUnit {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "has_united_part", nullable = false)
+    private Boolean hasUnitedPart;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "reservation_united_part_id", updatable = false, insertable = false)
     private ReservationUnitedPart reservationUnitedPart;
@@ -52,6 +55,9 @@ public class ReservationUnit {
     private Boolean hasReservationUnitType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reservation_unit_type_id")
+    @JoinColumn(name = "reservation_unit_type_id", insertable = false, updatable = false)
     private ReservationUnitType reservationUnitType;
+
+    @Column(name = "reservation_unit_type_id")
+    private UUID reservationUnitTypeId;
 }
