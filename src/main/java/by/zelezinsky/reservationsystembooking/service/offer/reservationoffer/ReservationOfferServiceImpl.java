@@ -6,8 +6,11 @@ import by.zelezinsky.reservationsystembooking.dto.offer.reservationoffer.Reserva
 import by.zelezinsky.reservationsystembooking.entity.offer.*;
 import by.zelezinsky.reservationsystembooking.entity.user.User;
 import by.zelezinsky.reservationsystembooking.exception.NotFoundException;
-import by.zelezinsky.reservationsystembooking.repository.offer.*;
-import by.zelezinsky.reservationsystembooking.repository.user.UserRepository;
+import by.zelezinsky.reservationsystembooking.repository.*;
+import by.zelezinsky.reservationsystembooking.repository.UserRepository;
+import by.zelezinsky.reservationsystembooking.repository.establishment.EstablishmentRepository;
+import by.zelezinsky.reservationsystembooking.repository.event.EventRepository;
+import by.zelezinsky.reservationsystembooking.repository.offer.ReservationOfferRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
