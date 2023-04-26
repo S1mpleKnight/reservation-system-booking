@@ -1,4 +1,4 @@
-package by.zelezinsky.reservationsystembooking.repository.user;
+package by.zelezinsky.reservationsystembooking.repository;
 
 import by.zelezinsky.reservationsystembooking.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
