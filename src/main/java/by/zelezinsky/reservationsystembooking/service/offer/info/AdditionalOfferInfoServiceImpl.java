@@ -5,7 +5,7 @@ import by.zelezinsky.reservationsystembooking.dto.offer.info.AdditionalOfferInfo
 import by.zelezinsky.reservationsystembooking.entity.offer.AdditionalOfferInfo;
 import by.zelezinsky.reservationsystembooking.entity.offer.ReservationOffer;
 import by.zelezinsky.reservationsystembooking.exception.NotFoundException;
-import by.zelezinsky.reservationsystembooking.repository.offer.AdditionalOfferInfoRepository;
+import by.zelezinsky.reservationsystembooking.repository.AdditionalOfferInfoRepository;
 import by.zelezinsky.reservationsystembooking.repository.offer.ReservationOfferRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

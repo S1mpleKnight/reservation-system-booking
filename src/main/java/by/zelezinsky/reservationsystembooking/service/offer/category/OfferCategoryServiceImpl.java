@@ -5,7 +5,7 @@ import by.zelezinsky.reservationsystembooking.dto.offer.category.OfferCategoryDt
 import by.zelezinsky.reservationsystembooking.entity.offer.OfferCategory;
 import by.zelezinsky.reservationsystembooking.exception.BadRequestException;
 import by.zelezinsky.reservationsystembooking.exception.NotFoundException;
-import by.zelezinsky.reservationsystembooking.repository.offer.OfferCategoryRepository;
+import by.zelezinsky.reservationsystembooking.repository.OfferCategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

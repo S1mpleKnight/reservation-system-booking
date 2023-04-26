@@ -6,7 +6,7 @@ import by.zelezinsky.reservationsystembooking.entity.offer.ReservationOffer;
 import by.zelezinsky.reservationsystembooking.entity.reservation.ReservationUnitedPart;
 import by.zelezinsky.reservationsystembooking.exception.NotFoundException;
 import by.zelezinsky.reservationsystembooking.repository.offer.ReservationOfferRepository;
-import by.zelezinsky.reservationsystembooking.repository.reservation.ReservationUnitedPartRepository;
+import by.zelezinsky.reservationsystembooking.repository.ReservationUnitedPartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -5,7 +5,7 @@ import by.zelezinsky.reservationsystembooking.dto.user.role.RoleDtoMapper;
 import by.zelezinsky.reservationsystembooking.entity.user.Role;
 import by.zelezinsky.reservationsystembooking.exception.BadRequestException;
 import by.zelezinsky.reservationsystembooking.exception.NotFoundException;
-import by.zelezinsky.reservationsystembooking.repository.user.RoleRepository;
+import by.zelezinsky.reservationsystembooking.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
