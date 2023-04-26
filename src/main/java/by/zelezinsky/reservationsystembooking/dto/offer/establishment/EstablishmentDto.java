@@ -1,6 +1,8 @@
 package by.zelezinsky.reservationsystembooking.dto.offer.establishment;
 
 import by.zelezinsky.reservationsystembooking.dto.DtoConstants;
+import by.zelezinsky.reservationsystembooking.dto.address.city.CityDto;
+import by.zelezinsky.reservationsystembooking.dto.address.country.CountryDto;
 import by.zelezinsky.reservationsystembooking.dto.user.user.UserDto;
 import lombok.Data;
 
@@ -20,9 +22,6 @@ public class EstablishmentDto {
     @NotNull(message = "Contact can not be empty")
     private UUID contactId;
 
-    @Pattern(regexp = DtoConstants.CITY_AND_STREET_REGEXP, message = "City name should be between 2 and 100 letters")
-    private String city;
-
     @NotNull(message = "City flag can not be empty")
     private Boolean hasCity;
 
@@ -31,9 +30,6 @@ public class EstablishmentDto {
 
     @NotNull(message = "Street flag can not be empty")
     private String hasStreet;
-
-    @Pattern(regexp = DtoConstants.COUNTRY_REGEXP, message = "Country name should be between 2 and 60 letters")
-    private String country;
 
     @NotNull(message = "County flag can not be empty")
     private Boolean hasCountry;
@@ -51,4 +47,12 @@ public class EstablishmentDto {
 
     @NotNull(message = "Apartment flag can not be empty")
     private Boolean hasApartment;
+
+    private CountryDto country;
+
+    private UUID countryId;
+
+    private CityDto city;
+
+    private UUID cityId;
 }

@@ -1,5 +1,7 @@
 package by.zelezinsky.reservationsystembooking.entity.offer;
 
+import by.zelezinsky.reservationsystembooking.entity.address.City;
+import by.zelezinsky.reservationsystembooking.entity.address.Country;
 import by.zelezinsky.reservationsystembooking.entity.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -23,8 +25,9 @@ public class Establishment {
     @Column(name = "user_id", nullable = false)
     private UUID contactId;
 
-    @Column(name = "city")
-    private String city;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "city_id")
+    private City city;
 
     @Column(name = "has_city", nullable = false)
     private Boolean hasCity;
@@ -35,8 +38,9 @@ public class Establishment {
     @Column(name = "has_street", nullable = false)
     private String hasStreet;
 
-    @Column(name = "country")
-    private String country;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name = "country_id")
+    private Country country;
 
     @Column(name = "has_country", nullable = false)
     private Boolean hasCountry;

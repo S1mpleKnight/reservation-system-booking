@@ -1,5 +1,6 @@
 package by.zelezinsky.reservationsystembooking.service.offer.establishment;
 
+import by.zelezinsky.reservationsystembooking.dto.filter.EstablishmentFilter;
 import by.zelezinsky.reservationsystembooking.dto.offer.establishment.EstablishmentDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +15,7 @@ public interface EstablishmentService {
 
     EstablishmentDto findById(UUID id);
 
-    Page<EstablishmentDto> findAll(Pageable pageable);
+    Page<EstablishmentDto> findAll(Pageable pageable, EstablishmentFilter filter);
 
     void delete(UUID id);
 }

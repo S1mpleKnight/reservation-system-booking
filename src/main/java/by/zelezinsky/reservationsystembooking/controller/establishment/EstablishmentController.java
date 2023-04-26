@@ -1,6 +1,7 @@
 package by.zelezinsky.reservationsystembooking.controller.establishment;
 
 import by.zelezinsky.reservationsystembooking.controller.Url;
+import by.zelezinsky.reservationsystembooking.dto.filter.EstablishmentFilter;
 import by.zelezinsky.reservationsystembooking.dto.offer.establishment.EstablishmentDto;
 import by.zelezinsky.reservationsystembooking.service.offer.establishment.EstablishmentService;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +25,10 @@ public class EstablishmentController {
     }
 
     @GetMapping
-    public Page<EstablishmentDto> findAll(@RequestParam(required = false) Pageable pageable) {
-        return establishmentService.findAll(pageable);
+    public Page<EstablishmentDto> findAll(
+            @RequestParam(required = false) Pageable pageable, EstablishmentFilter filter
+    ) {
+        return establishmentService.findAll(pageable, filter);
     }
 
     @PostMapping
