@@ -13,9 +13,9 @@ import java.util.UUID;
 @Repository
 public interface CityRepository extends JpaRepository<City, UUID> {
 
-    Page<City> findAllByCounty_Id(UUID id, Pageable pageable);
+    Page<City> findAllByCountry_Id(UUID id, Pageable pageable);
 
-    Boolean existsByNameAndCounty(String name, Country country);
+    Boolean existsByNameAndCountry(String name, Country country);
 
-    Optional<City> findByNameAndCounty(String name, Country country);
+    Optional<City> findByNameAndCountry(String name, Country country);
 }

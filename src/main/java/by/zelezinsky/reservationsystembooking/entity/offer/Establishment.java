@@ -39,7 +39,7 @@ public class Establishment {
     private String hasStreet;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "country_id")
+    @JoinColumn(name = "country_id")
     private Country country;
 
     @Column(name = "has_country", nullable = false)

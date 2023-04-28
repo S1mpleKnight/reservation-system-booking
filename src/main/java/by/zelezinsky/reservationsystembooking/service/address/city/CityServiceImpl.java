@@ -28,7 +28,7 @@ public class CityServiceImpl implements CityService {
     @Override
     public Page<CityDto> findAll(Pageable pageable, UUID countryId) {
         if (Objects.nonNull(countryId)) {
-            return cityRepository.findAllByCounty_Id(countryId, pageable).map(cityDtoMapper::toDto);
+            return cityRepository.findAllByCountry_Id(countryId, pageable).map(cityDtoMapper::toDto);
         } else {
             return cityRepository.findAll(pageable).map(cityDtoMapper::toDto);
         }
@@ -37,7 +37,7 @@ public class CityServiceImpl implements CityService {
     @Override
     public CityDto create(CityDto dto) {
         Country country = findCountry(dto.getCountryId());
-        Optional<City> optionalCity = cityRepository.findByNameAndCounty(dto.getName(), country);
+        Optional<City> optionalCity = cityRepository.findByNameAndCountry(dto.getName(), country);
         if (optionalCity.isPresent()) {
             return cityDtoMapper.toDto(optionalCity.get());
         }
@@ -50,7 +50,7 @@ public class CityServiceImpl implements CityService {
     public CityDto update(UUID id, CityDto dto) {
         City city = findCity(id);
         Country country = findCountry(dto.getCountryId());
-        if (cityRepository.existsByNameAndCounty(dto.getName(), country)) {
+        if (cityRepository.existsByNameAndCountry(dto.getName(), country)) {
             throw new BadRequestException("Such city already exists");
         }
         city = cityDtoMapper.toEntity(city, dto);
