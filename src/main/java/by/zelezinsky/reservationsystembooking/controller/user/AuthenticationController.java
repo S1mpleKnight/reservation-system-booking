@@ -4,7 +4,6 @@ import by.zelezinsky.reservationsystembooking.controller.Url;
 import by.zelezinsky.reservationsystembooking.dto.user.authentication.AuthenticationDto;
 import by.zelezinsky.reservationsystembooking.service.security.JwtAuthenticationService;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.Parameter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
