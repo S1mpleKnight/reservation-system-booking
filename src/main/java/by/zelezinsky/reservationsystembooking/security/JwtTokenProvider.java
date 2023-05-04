@@ -66,8 +66,7 @@ public class JwtTokenProvider {
     @PostConstruct
     protected void init() {
         this.secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
-        byte[] decode = Base64.getDecoder().decode(secretKey);
-        this.key = Keys.hmacShaKeyFor(decode);
+        this.key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     }
 
     private String getUsername(String token) {
