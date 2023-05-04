@@ -15,3 +15,10 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   liquibase:
     enabled: false
+jwt:
+  expiration: 99999
+  secret: minecraft
+  header: Authorization
+password:
+  hash:
+    strength: 12

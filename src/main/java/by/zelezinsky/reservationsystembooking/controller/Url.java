@@ -10,6 +10,10 @@ public interface Url {
 
     interface User {
         String BASE = "users/";
+
+        interface Authentication {
+            String BASE = "auth/";
+        }
     }
 
     interface Event {

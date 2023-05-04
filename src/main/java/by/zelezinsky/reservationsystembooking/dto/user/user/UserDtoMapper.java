@@ -30,4 +30,7 @@ public interface UserDtoMapper {
     @Mapping(target = "role", ignore = true)
     @Mapping(target = "offers", ignore = true)
     User toEntity(UserPreviewDto dto);
+
+    @Mapping(target = "password", ignore = true)
+    User toEntity(User user);
 }

@@ -11,13 +11,17 @@ import by.zelezinsky.reservationsystembooking.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
-@Service
+@Service("UserService")
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final UserDtoMapper userDtoMapper;
@@ -68,5 +72,16 @@ public class UserServiceImpl implements UserService {
 
     private User findUser(UUID id) {
         return userRepository.findById(id).orElseThrow(() -> new NotFoundException("User", id.toString()));
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> byUsername = userRepository.findByUsername(username);
+        if (byUsername.isEmpty()) {
+            throw new NotFoundException(String.format("User with username %s not found", username));
+        }
+        User entity = userDtoMapper.toEntity(byUsername.get());
+        return new org.springframework.security.core.userdetails.User(username, entity.getPassword(), true, true, true,
+                true, entity.getAuthorities());
     }
 }

@@ -10,4 +10,8 @@ public class NotFoundException extends RuntimeException {
     public NotFoundException(String entityName, List<String> ids) {
         super(entityName.concat(" have not found, ids: ").concat(String.join(" ", ids)));
     }
+
+    public NotFoundException(String message) {
+        super(message);
+    }
 }

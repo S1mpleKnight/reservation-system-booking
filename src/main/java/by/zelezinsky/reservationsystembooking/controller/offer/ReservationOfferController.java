@@ -1,6 +1,7 @@
 package by.zelezinsky.reservationsystembooking.controller.offer;
 
 import by.zelezinsky.reservationsystembooking.controller.Url;
+import by.zelezinsky.reservationsystembooking.dto.filter.ReservationOfferFilter;
 import by.zelezinsky.reservationsystembooking.dto.offer.reservationoffer.ReservationOfferDto;
 import by.zelezinsky.reservationsystembooking.entity.offer.ReservationOfferStatus;
 import by.zelezinsky.reservationsystembooking.service.offer.reservationoffer.ReservationOfferService;
@@ -25,8 +26,10 @@ public class ReservationOfferController {
     }
 
     @GetMapping
-    public Page<ReservationOfferDto> findAll(@RequestParam(required = false) Pageable pageable) {
-        return reservationOfferService.findAll(pageable);
+    public Page<ReservationOfferDto> findAll(
+            @RequestParam(required = false) Pageable pageable, ReservationOfferFilter filter
+    ) {
+        return reservationOfferService.findAll(pageable, filter);
     }
 
     @PostMapping

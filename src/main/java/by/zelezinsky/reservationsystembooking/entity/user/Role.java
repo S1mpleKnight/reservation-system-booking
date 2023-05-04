@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Table(name = "roles")
@@ -20,4 +21,7 @@ public class Role {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
     private List<User> users;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
+    private Set<Permission> permissions;
 }

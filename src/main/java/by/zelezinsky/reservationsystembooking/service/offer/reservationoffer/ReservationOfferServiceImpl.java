@@ -1,5 +1,6 @@
 package by.zelezinsky.reservationsystembooking.service.offer.reservationoffer;
 
+import by.zelezinsky.reservationsystembooking.dto.filter.ReservationOfferFilter;
 import by.zelezinsky.reservationsystembooking.dto.offer.info.AdditionalOfferInfoDtoMapper;
 import by.zelezinsky.reservationsystembooking.dto.offer.reservationoffer.ReservationOfferDto;
 import by.zelezinsky.reservationsystembooking.dto.offer.reservationoffer.ReservationOfferDtoMapper;
@@ -39,11 +40,11 @@ public class ReservationOfferServiceImpl implements ReservationOfferService {
     public ReservationOfferDto create(ReservationOfferDto dto) {
         ReservationOffer entity = reservationOfferDtoMapper.toEntity(dto);
         User user = findUser(dto.getContactId());
+        entity.setContactId(user.getId());
         setOfferEvent(dto, entity);
         setOfferEstablishment(dto, entity);
         setOfferAdditionalInfo(dto, entity);
         setOfferCategories(dto, entity);
-        entity.setContactId(user.getId());
         entity.setOfferStatus(ReservationOfferStatus.NOT_OPEN);
         return reservationOfferDtoMapper.toDto(reservationOfferRepository.save(entity));
     }
@@ -68,8 +69,8 @@ public class ReservationOfferServiceImpl implements ReservationOfferService {
     }
 
     @Override
-    public Page<ReservationOfferDto> findAll(Pageable pageable) {
-        return reservationOfferRepository.findAll(pageable).map(reservationOfferDtoMapper::toDto);
+    public Page<ReservationOfferDto> findAll(Pageable pageable, ReservationOfferFilter filter) {
+        return reservationOfferRepository.findAll(pageable, filter).map(reservationOfferDtoMapper::toDto);
     }
 
     @Override

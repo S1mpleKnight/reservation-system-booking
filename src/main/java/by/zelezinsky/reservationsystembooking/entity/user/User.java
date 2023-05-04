@@ -4,6 +4,7 @@ import by.zelezinsky.reservationsystembooking.entity.offer.ReservationOffer;
 import by.zelezinsky.reservationsystembooking.entity.reservation.Reservation;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -48,4 +49,11 @@ public class User {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "contact")
     private List<ReservationOffer> offers;
+
+    public List<SimpleGrantedAuthority> getAuthorities() {
+        return this.getRole().getPermissions()
+                .stream()
+                .map(permission -> new SimpleGrantedAuthority(permission.getName()))
+                .toList();
+    }
 }
