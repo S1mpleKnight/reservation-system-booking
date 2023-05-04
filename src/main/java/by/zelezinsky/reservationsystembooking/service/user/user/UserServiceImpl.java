@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.UUID;
 
-@Service("UserService")
+@Service("userService")
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService, UserDetailsService {
 
