@@ -1,6 +1,7 @@
 package by.zelezinsky.reservationsystembooking.service.user.user;
 
 import by.zelezinsky.reservationsystembooking.dto.user.user.UserDto;
+import by.zelezinsky.reservationsystembooking.dto.user.user.UserPreviewDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -17,4 +18,6 @@ public interface UserService {
     Page<UserDto> findAll(Pageable pageable);
 
     void delete(UUID id);
+
+    UserPreviewDto register(UserPreviewDto dto);
 }

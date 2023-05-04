@@ -2,6 +2,7 @@ package by.zelezinsky.reservationsystembooking.service.user.user;
 
 import by.zelezinsky.reservationsystembooking.dto.user.user.UserDto;
 import by.zelezinsky.reservationsystembooking.dto.user.user.UserDtoMapper;
+import by.zelezinsky.reservationsystembooking.dto.user.user.UserPreviewDto;
 import by.zelezinsky.reservationsystembooking.entity.user.Role;
 import by.zelezinsky.reservationsystembooking.entity.user.User;
 import by.zelezinsky.reservationsystembooking.exception.BadRequestException;
@@ -41,7 +42,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public UserDto update(UUID id, UserDto dto) {
         User user = findUser(id);
-        if (userRepository.existsByUsername(dto.getUsername())) {
+        if (!user.getUsername().equals(dto.getUsername()) && userRepository.existsByUsername(dto.getUsername())) {
             throw new BadRequestException("User with that username already exists");
         }
         Role role = findRole(dto.getRoleId());
@@ -64,6 +65,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public void delete(UUID id) {
         User user = findUser(id);
         userRepository.delete(user);
+    }
+
+    @Override
+    public UserPreviewDto register(UserPreviewDto dto) {
+        if (userRepository.existsByUsername(dto.getUsername())) {
+            throw new BadRequestException("User with that username already exists");
+        }
+        User entity = userDtoMapper.toEntity(dto);
+        entity.setRole(roleRepository.findByName(dto.getRoleName().toString()));
+        return userDtoMapper.toPreviewDto(userRepository.save(entity));
     }
 
     private Role findRole(UUID id) {
