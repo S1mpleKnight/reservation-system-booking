@@ -15,7 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.SecretKey;
+import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
 
@@ -30,7 +30,7 @@ public class JwtTokenProvider {
     private String secretKey;
     @Value("${jwt.header}")
     private String httpHeader;
-    private SecretKey key;
+    private Key key;
 
     public JwtTokenProvider(@Qualifier("userService") UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
