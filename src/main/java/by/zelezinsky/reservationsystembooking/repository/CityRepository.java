@@ -18,4 +18,6 @@ public interface CityRepository extends JpaRepository<City, UUID> {
     Boolean existsByNameAndCountry(String name, Country country);
 
     Optional<City> findByNameAndCountry(String name, Country country);
+
+    Boolean existsByCountry(Country country);
 }

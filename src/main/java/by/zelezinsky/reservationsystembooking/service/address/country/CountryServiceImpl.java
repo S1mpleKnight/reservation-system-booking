@@ -5,6 +5,7 @@ import by.zelezinsky.reservationsystembooking.dto.address.country.CountryDtoMapp
 import by.zelezinsky.reservationsystembooking.entity.address.Country;
 import by.zelezinsky.reservationsystembooking.exception.BadRequestException;
 import by.zelezinsky.reservationsystembooking.exception.NotFoundException;
+import by.zelezinsky.reservationsystembooking.repository.CityRepository;
 import by.zelezinsky.reservationsystembooking.repository.CountryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,7 @@ public class CountryServiceImpl implements CountryService {
 
     private final CountryRepository countryRepository;
     private final CountryDtoMapper countryDtoMapper;
+    private final CityRepository cityRepository;
 
     @Override
     public Page<CountryDto> findAll(Pageable pageable) {
@@ -49,8 +51,10 @@ public class CountryServiceImpl implements CountryService {
     @Override
     public void delete(UUID id) {
         Country country = findCountry(id);
+        if (cityRepository.existsByCountry(country)) {
+            throw new BadRequestException("Country can not be deleted, there are some cities");
+        }
         countryRepository.delete(country);
-        //todo: remove cities
     }
 
     private Country findCountry(UUID id) {
