@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -27,6 +28,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final UserDtoMapper userDtoMapper;
     private final RoleRepository roleRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public UserDto create(UserDto dto) {
@@ -35,6 +37,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
         Role role = findRole(dto.getRoleId());
         User entity = userDtoMapper.toEntity(dto);
+        entity.setPassword(passwordEncoder.encode(dto.getPassword()));
         entity.setRole(role);
         return userDtoMapper.toDto(userRepository.save(entity));
     }
@@ -47,6 +50,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
         Role role = findRole(dto.getRoleId());
         user = userDtoMapper.toEntity(user, dto);
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user.setRole(role);
         return userDtoMapper.toDto(user);
     }
@@ -73,7 +77,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new BadRequestException("User with that username already exists");
         }
         User entity = userDtoMapper.toEntity(dto);
-        entity.setRole(roleRepository.findByName(dto.getRoleName().toString()));
+        entity.setPassword(passwordEncoder.encode(dto.getPassword()));
+        Role role = findRole(dto);
+        entity.setRole(role);
         return userDtoMapper.toPreviewDto(userRepository.save(entity));
     }
 
@@ -85,13 +91,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.findById(id).orElseThrow(() -> new NotFoundException("User", id.toString()));
     }
 
+    private Role findRole(UserPreviewDto dto) {
+        return roleRepository.findByName(dto.getRoleName().toString())
+                .orElseThrow(() -> new NotFoundException("Role", dto.getRoleName().toString()));
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> byUsername = userRepository.findByUsername(username);
         if (byUsername.isEmpty()) {
             throw new NotFoundException(String.format("User with username %s not found", username));
         }
-        User entity = userDtoMapper.toEntity(byUsername.get());
+        User entity = byUsername.get();
         return new org.springframework.security.core.userdetails.User(username, entity.getPassword(), true, true, true,
                 true, entity.getAuthorities());
     }

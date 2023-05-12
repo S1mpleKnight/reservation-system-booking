@@ -17,7 +17,7 @@ public class User {
 
     @Id
     @Column(name = "id", insertable = false, updatable = false)
-    private UUID id;
+    private UUID id = UUID.randomUUID();
 
     @Column(name = "username", nullable = false)
     private String username;
