@@ -2,15 +2,18 @@ package by.zelezinsky.reservationsystembooking.security;
 
 import by.zelezinsky.reservationsystembooking.entity.user.User;
 import by.zelezinsky.reservationsystembooking.exception.JwtAuthenticationException;
+import by.zelezinsky.reservationsystembooking.repository.PermissionRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
@@ -18,12 +21,15 @@ import org.springframework.stereotype.Component;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
 public class JwtTokenProvider {
 
     private final UserDetailsService userDetailsService;
+    private final PermissionRepository permissionRepository;
     @Value("${jwt.expiration}")
     private Long validityTime;
     @Value("${jwt.secret}")
@@ -32,15 +38,21 @@ public class JwtTokenProvider {
     private String httpHeader;
     private Key key;
 
-    public JwtTokenProvider(@Qualifier("userService") UserDetailsService userDetailsService) {
+    public JwtTokenProvider(@Qualifier("userService") UserDetailsService userDetailsService,
+                            @Autowired PermissionRepository permissionRepository) {
         this.userDetailsService = userDetailsService;
+        this.permissionRepository = permissionRepository;
     }
 
     public String createToken(User user) {
         Claims claims = Jwts.claims().setSubject(user.getUsername());
-        claims.put("authorities", user.getAuthorities());
+        List<SimpleGrantedAuthority> authorities = permissionRepository.findAllByRole(user.getRole())
+                .stream()
+                .map(permission -> new SimpleGrantedAuthority(permission.getName()))
+                .collect(Collectors.toList());
+        claims.put("authorities", authorities);
         Date now = new Date();
-        Date validity = new Date(now.getTime() + validityTime);
+        Date validity = new Date(now.getTime() + validityTime * 1000);
         return buildToken(claims, now, validity);
     }
 

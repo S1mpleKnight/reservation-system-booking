@@ -13,5 +13,6 @@ public interface OfferCategoryDtoMapper {
     @Mapping(target = "id", ignore = true)
     OfferCategory toEntity(@MappingTarget OfferCategory category, OfferCategoryDto dto);
 
+    @Mapping(target = "id", ignore = true)
     OfferCategory toEntity(OfferCategoryDto dto);
 }

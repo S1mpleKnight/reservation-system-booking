@@ -3,23 +3,27 @@ package by.zelezinsky.reservationsystembooking.service.user.user;
 import by.zelezinsky.reservationsystembooking.dto.user.user.UserDto;
 import by.zelezinsky.reservationsystembooking.dto.user.user.UserDtoMapper;
 import by.zelezinsky.reservationsystembooking.dto.user.user.UserPreviewDto;
+import by.zelezinsky.reservationsystembooking.entity.user.Permission;
 import by.zelezinsky.reservationsystembooking.entity.user.Role;
 import by.zelezinsky.reservationsystembooking.entity.user.User;
 import by.zelezinsky.reservationsystembooking.exception.BadRequestException;
 import by.zelezinsky.reservationsystembooking.exception.NotFoundException;
+import by.zelezinsky.reservationsystembooking.repository.PermissionRepository;
 import by.zelezinsky.reservationsystembooking.repository.RoleRepository;
 import by.zelezinsky.reservationsystembooking.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service("userService")
 @RequiredArgsConstructor
@@ -28,7 +32,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final UserDtoMapper userDtoMapper;
     private final RoleRepository roleRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final PermissionRepository permissionRepository;
 
     @Override
     public UserDto create(UserDto dto) {
@@ -37,7 +41,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
         Role role = findRole(dto.getRoleId());
         User entity = userDtoMapper.toEntity(dto);
-        entity.setPassword(passwordEncoder.encode(dto.getPassword()));
         entity.setRole(role);
         return userDtoMapper.toDto(userRepository.save(entity));
     }
@@ -50,7 +53,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
         Role role = findRole(dto.getRoleId());
         user = userDtoMapper.toEntity(user, dto);
-        user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user.setRole(role);
         return userDtoMapper.toDto(user);
     }
@@ -77,7 +79,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new BadRequestException("User with that username already exists");
         }
         User entity = userDtoMapper.toEntity(dto);
-        entity.setPassword(passwordEncoder.encode(dto.getPassword()));
         Role role = findRole(dto);
         entity.setRole(role);
         return userDtoMapper.toPreviewDto(userRepository.save(entity));
@@ -103,7 +104,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new NotFoundException(String.format("User with username %s not found", username));
         }
         User entity = byUsername.get();
+        List<Permission> permissions = permissionRepository.findAllByRole(entity.getRole());
+        List<SimpleGrantedAuthority> authorities = permissions
+                .stream()
+                .map(permission -> new SimpleGrantedAuthority(permission.getName()))
+                .collect(Collectors.toList());
         return new org.springframework.security.core.userdetails.User(username, entity.getPassword(), true, true, true,
-                true, entity.getAuthorities());
+                true, authorities);
     }
 }

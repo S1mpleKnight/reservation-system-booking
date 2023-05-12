@@ -5,6 +5,7 @@ import by.zelezinsky.reservationsystembooking.entity.address.Country;
 import by.zelezinsky.reservationsystembooking.entity.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,6 +13,7 @@ import java.util.UUID;
 @Data
 @Entity
 @Table(name = "establishments")
+@ToString
 public class Establishment {
 
     @Id
@@ -57,6 +59,7 @@ public class Establishment {
     @Column(name = "has_apartment", nullable = false)
     private Boolean hasApartment;
 
+    @ToString.Exclude
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "establishment")
     private List<ReservationOffer> offers;
 }

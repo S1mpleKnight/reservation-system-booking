@@ -11,6 +11,7 @@ public interface EstablishmentDtoMapper {
 
     EstablishmentDto toDto(Establishment establishment);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "contact", ignore = true)
     @Mapping(target = "contactId", ignore = true)
     @Mapping(target = "offers", ignore = true)

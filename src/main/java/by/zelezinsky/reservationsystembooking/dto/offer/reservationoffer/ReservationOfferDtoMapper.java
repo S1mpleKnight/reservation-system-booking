@@ -24,6 +24,7 @@ public interface ReservationOfferDtoMapper {
 
     String CATEGORY_IDS_QUALIFIER = "CATEGORY_IDS_QUALIFIER";
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "event", ignore = true)
     @Mapping(target = "eventId", ignore = true)
     @Mapping(target = "contact", ignore = true)

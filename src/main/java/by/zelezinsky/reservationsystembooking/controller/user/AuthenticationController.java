@@ -7,6 +7,7 @@ import by.zelezinsky.reservationsystembooking.service.security.JwtAuthentication
 import by.zelezinsky.reservationsystembooking.service.user.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,7 @@ public class AuthenticationController {
 
     private final JwtAuthenticationService jwtAuthenticationService;
     private final UserService userService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping(Url.User.Authentication.BASE)
     public ResponseEntity<Map<Object, Object>> authenticate(@Valid @RequestBody AuthenticationDto request) {
@@ -29,6 +31,7 @@ public class AuthenticationController {
 
     @PostMapping(Url.User.Registration.BASE)
     public UserPreviewDto register(@Valid @RequestBody UserPreviewDto dto) {
+        dto.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
         return userService.register(dto);
     }
 }

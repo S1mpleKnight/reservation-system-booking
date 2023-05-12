@@ -8,10 +8,10 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring")
 public interface ReservationUnitTypeDtoMapper {
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "offer", ignore = true)
     @Mapping(target = "offerId", ignore = true)
     ReservationUnitType toEntity(ReservationUnitTypeDto dto);
-
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "offer", ignore = true)

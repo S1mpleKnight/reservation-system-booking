@@ -10,6 +10,7 @@ public interface AdditionalOfferInfoDtoMapper {
 
     AdditionalOfferInfoDto toDto(AdditionalOfferInfo info);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "offer", ignore = true)
     @Mapping(target = "offerId", ignore = true)
     AdditionalOfferInfo toEntity(AdditionalOfferInfoDto dto);

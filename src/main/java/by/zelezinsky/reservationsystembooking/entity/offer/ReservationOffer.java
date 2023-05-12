@@ -6,6 +6,7 @@ import by.zelezinsky.reservationsystembooking.entity.reservation.ReservationUnit
 import by.zelezinsky.reservationsystembooking.entity.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @Data
 @Table(name = "reservation_offers")
 @Entity
+@ToString
 public class ReservationOffer {
 
     @Id
@@ -69,6 +71,7 @@ public class ReservationOffer {
     @Column(name = "offer_status", nullable = false)
     private ReservationOfferStatus offerStatus;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false, insertable = false, updatable = false)
     private User contact;

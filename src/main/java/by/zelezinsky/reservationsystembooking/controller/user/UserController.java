@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,6 +20,7 @@ import java.util.UUID;
 public class UserController {
 
     private final UserService userService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Secured(Authorities.VIEW_USER)
     @GetMapping(Url.ID)
@@ -35,12 +37,14 @@ public class UserController {
     @Secured(Authorities.UPDATE_USER)
     @PostMapping
     public UserDto create(@RequestBody @Valid UserDto dto) {
+        dto.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
         return userService.create(dto);
     }
 
     @Secured(Authorities.UPDATE_USER)
     @PutMapping(Url.ID)
     public UserDto update(@PathVariable UUID id, @RequestBody @Valid UserDto dto) {
+        dto.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
         return userService.update(id, dto);
     }
 

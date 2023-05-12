@@ -4,7 +4,7 @@ import by.zelezinsky.reservationsystembooking.entity.offer.ReservationOffer;
 import by.zelezinsky.reservationsystembooking.entity.reservation.Reservation;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,6 +13,7 @@ import java.util.UUID;
 @Data
 @Table(name = "users")
 @Entity
+@ToString
 public class User {
 
     @Id
@@ -37,7 +38,7 @@ public class User {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
@@ -49,11 +50,4 @@ public class User {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "contact")
     private List<ReservationOffer> offers;
-
-    public List<SimpleGrantedAuthority> getAuthorities() {
-        return this.getRole().getPermissions()
-                .stream()
-                .map(permission -> new SimpleGrantedAuthority(permission.getName()))
-                .toList();
-    }
 }

@@ -12,6 +12,7 @@ public interface ReservationDtoMapper {
     @Mapping(target = "unitIds", ignore = true)
     ReservationDto toDto(Reservation reservation);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "userId", ignore = true)
     @Mapping(target = "units", ignore = true)

@@ -10,6 +10,7 @@ public interface CountryDtoMapper {
 
     CountryDto toDto(Country country);
 
+    @Mapping(target = "id", ignore = true)
     Country toEntity(CountryDto dto);
 
     @Mapping(target = "id", ignore = true)

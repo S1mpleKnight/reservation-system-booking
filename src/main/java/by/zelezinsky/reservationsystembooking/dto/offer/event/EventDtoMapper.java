@@ -11,6 +11,7 @@ public interface EventDtoMapper {
 
     EventDto toDto(Event event);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "contactId", ignore = true)
     @Mapping(target = "contact", ignore = true)
     Event toEntity(EventDto dto);

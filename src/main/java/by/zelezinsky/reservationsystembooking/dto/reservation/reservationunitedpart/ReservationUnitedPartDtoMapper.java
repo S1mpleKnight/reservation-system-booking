@@ -3,7 +3,6 @@ package by.zelezinsky.reservationsystembooking.dto.reservation.reservationunited
 import by.zelezinsky.reservationsystembooking.entity.reservation.ReservationUnitedPart;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface ReservationUnitedPartDtoMapper {
@@ -12,6 +11,7 @@ public interface ReservationUnitedPartDtoMapper {
     @Mapping(target = "parts", ignore = true)
     ReservationUnitedPartDto toDto(ReservationUnitedPart unitedPart);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "offer", ignore = true)
     @Mapping(target = "parent", ignore = true)
     @Mapping(target = "units", ignore = true)

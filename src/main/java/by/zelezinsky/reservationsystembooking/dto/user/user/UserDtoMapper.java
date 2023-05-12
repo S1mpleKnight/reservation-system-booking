@@ -15,6 +15,7 @@ public interface UserDtoMapper {
 
     UserPreviewDto toPreviewDto(User user);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "reservations", ignore = true)
     @Mapping(target = "role", ignore = true)
     @Mapping(target = "offers", ignore = true)
@@ -29,6 +30,7 @@ public interface UserDtoMapper {
     @Mapping(target = "reservations", ignore = true)
     @Mapping(target = "role", ignore = true)
     @Mapping(target = "offers", ignore = true)
+    @Mapping(target = "id", ignore = true)
     User toEntity(UserPreviewDto dto);
 
     @Mapping(target = "password", ignore = true)

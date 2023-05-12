@@ -11,7 +11,7 @@ import java.util.UUID;
 public class Country {
 
     @Id
-    @Column(nullable = false, name = "id")
+    @Column(nullable = false, name = "id", insertable = false)
     private UUID id = UUID.randomUUID();
 
     @Column(name = "name", nullable = false)
