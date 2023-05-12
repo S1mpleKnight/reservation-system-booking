@@ -9,12 +9,16 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   liquibase:
-    enabled: false
+    enabled: true
+    change-log: classpath:db/changelog/changelog-master.xml
+    database-change-log-lock-table: CHANGELOCK
+    database-change-log-table: CHANGELOG
+#        jwt auth
 jwt:
   expiration: 99999
   secret: minecraft

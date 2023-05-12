@@ -1,0 +1,46 @@
+insert into roles (id, name)
+values
+    ('d7c14ad6-0382-4ee0-8ab1-189aa666c6ba', 'ADMIN'),
+    ('0e44c289-d340-4900-8e2e-210574b4127a', 'USER'),
+    ('f1e81322-c12f-4d02-9dfd-58cc6446f101', 'SUPPLIER'),
+    ('f51689e6-c54c-4aee-83b5-6351425c90cf', 'RESPONSIBLE');
+
+insert into permission (id, name, role_id)
+values
+    ('2e6d6930-d167-4194-9dee-14170d3b6893', 'VIEW_CITY', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('01ba2a0a-9065-4fa6-b3a5-d049a1cd38d1', 'UPDATE_CITY', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('bf06e980-fb1a-44e1-a660-a5670fad3127', 'DELETE_CITY', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('5ed03863-e4d2-4472-a054-7b8039d64d9f', 'VIEW_COUNTRY', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('9e11911a-7eae-4952-876b-87a89358ed50', 'UPDATE_COUNTRY', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('67984f0d-0b1e-4896-8273-7ec4f9215065', 'DELETE_COUNTRY', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('c3d082bf-ccdd-491e-9b5a-cc6e7b5a5bd5', 'VIEW_EVENT', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('5576d562-f4ff-4edf-9a5e-67e1f3fc4726', 'UPDATE_EVENT', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('af53cdfa-b545-44e8-8c26-f1b56ca5c3e5', 'DELETE_EVENT', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('a0d47fe2-cd94-4b55-ae5b-fff8f3601bf4', 'VIEW_ESTABLISHMENT', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('cb885fc1-be00-4c05-8450-24a824aefe58', 'UPDATE_ESTABLISHMENT', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('3f12a8fd-90e2-4ca3-82c6-2513cde670bd', 'DELETE_ESTABLISHMENT', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('f40dc26e-eb34-4889-b4c6-4cc0735e57e7', 'VIEW_OFFER_CATEGORY', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('cacef289-2905-4619-8b36-c5b845c6296e', 'UPDATE_OFFER_CATEGORY', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('9bc1a2e1-2637-45e8-bf94-c561b0b4cfff', 'DELETE_OFFER_CATEGORY', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('3e1b9306-3cd8-4960-9239-2ad6e501be2e', 'VIEW_RESERVATION_OFFER', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('1a3b4ac1-8a42-4c6f-8553-cc7cdedf9d56', 'UPDATE_RESERVATION_OFFER', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('ae09fe3d-4fe8-404d-a0e3-6feed6ed35bd', 'DELETE_RESERVATION_OFFER', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('ec6f22c4-af95-4f40-bc92-d1fa917c9ba7', 'VIEW_RESERVATION_UNIT_TYPE', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('0e1c7610-616d-43f5-8cd6-ae8aa9481387', 'UPDATE_RESERVATION_UNIT_TYPE', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('80cb1a7b-c91e-42d7-a6aa-56732d030c9f', 'DELETE_RESERVATION_UNIT_TYPE', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('c0c86837-2a68-49a2-8965-31e9c6aa1dcc', 'VIEW_RESERVATION', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('c1518104-b061-41d7-ad70-5e7e64c5216c', 'UPDATE_RESERVATION', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('d59e7922-7dba-448b-9d79-0e77d8a88559', 'DELETE_RESERVATION', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('6092ed49-28a5-4801-b059-332f8dbf62a1', 'VIEW_RESERVATION_UNIT', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('974e9279-3a76-4f40-9629-b02d805ffaca', 'UPDATE_RESERVATION_UNIT', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('1b7b1ad5-aa1e-435f-a7f3-3d4dbe662c26', 'DELETE_RESERVATION_UNIT', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('80b924cb-93c4-40e3-a086-fe476b18274f', 'VIEW_RESERVATION_UNITED_PART', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('de321c6c-470e-438b-83a0-aeb2a76594f6', 'UPDATE_RESERVATION_UNITED_PART', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('6634071a-08f9-4d0f-97cf-6a95080c9f99', 'DELETE_RESERVATION_UNITED_PART', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('4e145c3c-7615-43c0-aefa-fbc058b06395', 'VIEW_ROLE', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('ed6b0b51-ea7b-4bc6-a21f-69ddf07bfb47', 'UPDATE_ROLE', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('73d06032-23d5-4894-ba41-2ad6fc4af655', 'DELETE_ROLE', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('490ce906-e7d8-4f14-a791-093600840723', 'VIEW_USER', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('6b3d7fd1-bff5-47b3-95fc-cd5e7f45207c', 'UPDATE_USER', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba'),
+    ('2cd826df-142e-46a1-b7c7-d35720932a0c', 'DELETE_USER', 'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba');
+
