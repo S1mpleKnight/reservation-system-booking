@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -31,6 +32,9 @@ public class ReservationUnitedPartServiceImpl implements ReservationUnitedPartSe
 
     @Override
     public Page<ReservationUnitedPartDto> findAll(UUID id, Pageable pageable) {
+        if (Objects.isNull(pageable)) {
+            pageable = Pageable.unpaged();
+        }
         ReservationOffer offer = findOffer(id);
         return repository.findAllByOffer(offer, pageable).map(mapper::toDto);
     }

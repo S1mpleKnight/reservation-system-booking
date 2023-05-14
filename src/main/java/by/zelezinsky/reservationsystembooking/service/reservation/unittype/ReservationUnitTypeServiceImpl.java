@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -54,6 +55,9 @@ public class ReservationUnitTypeServiceImpl implements ReservationUnitTypeServic
 
     @Override
     public Page<ReservationUnitTypeDto> findAll(UUID id, Pageable pageable) {
+        if (Objects.isNull(pageable)) {
+            pageable = Pageable.unpaged();
+        }
         ReservationOffer offer = findOffer(id);
         return unitTypeRepository.findAllByOffer(offer, pageable).map(dtoMapper::toDto);
     }

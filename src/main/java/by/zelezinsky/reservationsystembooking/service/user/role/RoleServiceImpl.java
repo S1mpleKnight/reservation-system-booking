@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -41,6 +42,9 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Page<RoleDto> findAll(Pageable pageable) {
+        if (Objects.isNull(pageable)) {
+            pageable = Pageable.unpaged();
+        }
         return roleRepository.findAll(pageable).map(roleDtoMapper::toDto);
     }
 

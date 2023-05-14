@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -46,6 +47,9 @@ public class OfferCategoryServiceImpl implements OfferCategoryService {
 
     @Override
     public Page<OfferCategoryDto> findAll(Pageable pageable) {
+        if (Objects.isNull(pageable)) {
+            pageable = Pageable.unpaged();
+        }
         return offerCategoryRepository.findAll(pageable).map(offerCategoryDtoMapper::toDto);
     }
 

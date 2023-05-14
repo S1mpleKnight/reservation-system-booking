@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -70,6 +71,9 @@ public class ReservationOfferServiceImpl implements ReservationOfferService {
 
     @Override
     public Page<ReservationOfferDto> findAll(Pageable pageable, ReservationOfferFilter filter) {
+        if (Objects.isNull(pageable)) {
+            pageable = Pageable.unpaged();
+        }
         return reservationOfferRepository.findAll(pageable, filter).map(reservationOfferDtoMapper::toDto);
     }
 

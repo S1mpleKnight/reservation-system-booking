@@ -21,6 +21,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -64,6 +65,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public Page<UserDto> findAll(Pageable pageable) {
+        if (Objects.isNull(pageable)) {
+            pageable = Pageable.unpaged();
+        }
         return userRepository.findAll(pageable).map(userDtoMapper::toDto);
     }
 

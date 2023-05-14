@@ -24,6 +24,7 @@ import java.time.LocalTime;
 import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -47,6 +48,9 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public Page<ReservationDto> findAll(Pageable pageable) {
+        if (Objects.isNull(pageable)) {
+            pageable = Pageable.unpaged();
+        }
         return reservationRepository.findAll(pageable).map(reservationDtoMapper::toDto);
     }
 
