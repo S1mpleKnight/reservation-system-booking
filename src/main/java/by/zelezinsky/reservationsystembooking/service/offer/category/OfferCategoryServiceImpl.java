@@ -18,8 +18,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class OfferCategoryServiceImpl implements OfferCategoryService {
 
-    private OfferCategoryRepository offerCategoryRepository;
-    private OfferCategoryDtoMapper offerCategoryDtoMapper;
+    private final OfferCategoryRepository offerCategoryRepository;
+    private final OfferCategoryDtoMapper offerCategoryDtoMapper;
 
     @Override
     public OfferCategoryDto create(OfferCategoryDto dto) {

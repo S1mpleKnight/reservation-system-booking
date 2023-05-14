@@ -32,7 +32,7 @@ public interface Url {
         String BASE = "offers/";
 
         interface UnitType {
-            String BASE = "type/";
+            String BASE = "types/";
             String FULL = ReservationOffer.BASE + ID + "/" + BASE;
         }
 

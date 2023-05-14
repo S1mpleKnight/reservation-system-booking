@@ -177,7 +177,9 @@ public class ReservationOfferServiceImpl implements ReservationOfferService {
             offer.setHasAdditionalInfo(Boolean.TRUE);
         } else {
             offer.setHasAdditionalInfo(Boolean.FALSE);
-            additionalOfferInfoRepository.delete(offer.getInfo());
+            if (Objects.nonNull(offer.getInfo())) {
+                additionalOfferInfoRepository.delete(offer.getInfo());
+            }
         }
     }
 }

@@ -35,3 +35,12 @@ INSERT INTO events
 VALUES ('af66067a-a121-4e84-b3cb-47914f6badcf', '46ffd4fc-4452-4ee8-8192-96fe46f89b4b', 'Postman testing', '2023-05-15',
         true, false, '2023-05-14', NULL, 'First test event');
 
+INSERT INTO offer_categories
+VALUES ('b049e188-81c1-4eb6-aefd-abb2fd2b9278', 'restaurant');
+
+INSERT INTO reservation_offers
+VALUES ('f4abd7b8-9238-4e8b-8e9c-b102c15ed02e', '46ffd4fc-4452-4ee8-8192-96fe46f89b4b', NULL, NULL, false, false, false,
+        false, 'Restaraunt places', 'NOT_OPEN', 'NONE', '2023-05-15', NULL, 'PLACE');
+
+INSERT INTO reservation_offer_offer_category
+VALUES ('f4abd7b8-9238-4e8b-8e9c-b102c15ed02e', 'b049e188-81c1-4eb6-aefd-abb2fd2b9278');
