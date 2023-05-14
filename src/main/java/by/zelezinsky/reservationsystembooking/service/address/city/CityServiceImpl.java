@@ -8,6 +8,7 @@ import by.zelezinsky.reservationsystembooking.exception.BadRequestException;
 import by.zelezinsky.reservationsystembooking.exception.NotFoundException;
 import by.zelezinsky.reservationsystembooking.repository.CityRepository;
 import by.zelezinsky.reservationsystembooking.repository.CountryRepository;
+import by.zelezinsky.reservationsystembooking.repository.establishment.EstablishmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,9 +25,13 @@ public class CityServiceImpl implements CityService {
     private final CityRepository cityRepository;
     private final CityDtoMapper cityDtoMapper;
     private final CountryRepository countryRepository;
+    private final EstablishmentRepository establishmentRepository;
 
     @Override
     public Page<CityDto> findAll(Pageable pageable, UUID countryId) {
+        if (Objects.isNull(pageable)) {
+            pageable = Pageable.unpaged();
+        }
         if (Objects.nonNull(countryId)) {
             return cityRepository.findAllByCountry_Id(countryId, pageable).map(cityDtoMapper::toDto);
         } else {
@@ -61,8 +66,10 @@ public class CityServiceImpl implements CityService {
     @Override
     public void delete(UUID id) {
         City city = findCity(id);
+        if (establishmentRepository.existsByCity(city)) {
+            throw new BadRequestException("There are some establishments with this city");
+        }
         cityRepository.delete(city);
-        //todo: do smth with establishments
     }
 
     private City findCity(UUID id) {

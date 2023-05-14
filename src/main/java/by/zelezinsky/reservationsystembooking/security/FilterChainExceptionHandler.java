@@ -1,5 +1,6 @@
 package by.zelezinsky.reservationsystembooking.security;
 
+import by.zelezinsky.reservationsystembooking.exception.JwtAuthenticationException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,7 +30,7 @@ public class FilterChainExceptionHandler extends OncePerRequestFilter {
     ) throws ServletException, IOException {
         try {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
-        } catch (Exception e) {
+        } catch (JwtAuthenticationException e) {
             log.error(e.getMessage());
             resolver.resolveException(httpServletRequest, httpServletResponse, null, e);
         }

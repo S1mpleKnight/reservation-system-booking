@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,6 +26,9 @@ public class CountryServiceImpl implements CountryService {
 
     @Override
     public Page<CountryDto> findAll(Pageable pageable) {
+        if (Objects.isNull(pageable)) {
+            pageable = Pageable.unpaged();
+        }
         return countryRepository.findAll(pageable).map(countryDtoMapper::toDto);
     }
 

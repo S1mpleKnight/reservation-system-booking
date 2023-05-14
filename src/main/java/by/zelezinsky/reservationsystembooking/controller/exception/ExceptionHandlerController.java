@@ -1,6 +1,7 @@
 package by.zelezinsky.reservationsystembooking.controller.exception;
 
 import by.zelezinsky.reservationsystembooking.exception.BadRequestException;
+import by.zelezinsky.reservationsystembooking.exception.JwtAuthenticationException;
 import by.zelezinsky.reservationsystembooking.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,5 +22,11 @@ public class ExceptionHandlerController {
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<String> notFound(RuntimeException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(JwtAuthenticationException.class)
+    public ResponseEntity<String> forbidden(RuntimeException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
     }
 }

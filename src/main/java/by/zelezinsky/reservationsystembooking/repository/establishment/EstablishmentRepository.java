@@ -14,4 +14,6 @@ public interface EstablishmentRepository extends JpaRepository<Establishment, UU
     Boolean existsByCountryAndCityAndStreetAndBuildingAndApartment(
             Country country, City city, String street, String building, String apartment
     );
+
+    Boolean existsByCity(City city);
 }

@@ -37,7 +37,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private void rejectAuthentication(JwtAuthenticationException e) {
         log.error(e.getMessage());
         SecurityContextHolder.clearContext();
-        throw new JwtAuthenticationException("JWT token filter have not been passed");
+        throw new JwtAuthenticationException(e.getMessage());
     }
 
     private void acceptAuthentication(String token) {
