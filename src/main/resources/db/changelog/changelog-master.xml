@@ -18,4 +18,11 @@
                  relativeToChangelogFile="false"
                  stripComments="true"/>
     </changeSet>
+
+    <changeSet author="Ivan Zelezinski" id="3 - add data">
+        <sqlFile encoding="utf8"
+                 path="classpath:db/changelog/migration/3 - add data.sql"
+                 relativeToChangelogFile="false"
+                 stripComments="true"/>
+    </changeSet>
 </databaseChangeLog>
