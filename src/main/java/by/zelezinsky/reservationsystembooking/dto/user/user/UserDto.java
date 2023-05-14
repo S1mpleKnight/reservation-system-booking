@@ -18,6 +18,8 @@ import static by.zelezinsky.reservationsystembooking.dto.DtoConstants.*;
 @Valid
 public class UserDto {
 
+    private UUID id;
+
     @NotBlank(message = "Username can not be empty")
     @Pattern(regexp = USERNAME_REGEXP, message = "Username can not be empty")
     private String username;

@@ -3,6 +3,7 @@ package by.zelezinsky.reservationsystembooking.entity.reservation;
 import by.zelezinsky.reservationsystembooking.entity.offer.ReservationOffer;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.time.LocalTime;
 import java.util.UUID;
@@ -10,6 +11,7 @@ import java.util.UUID;
 @Data
 @Table(name = "reservation_units")
 @Entity
+@ToString
 public class ReservationUnit {
 
     @Id
@@ -25,6 +27,7 @@ public class ReservationUnit {
     @Column(name = "has_united_part", nullable = false)
     private Boolean hasUnitedPart;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "reservation_united_part_id", updatable = false, insertable = false)
     private ReservationUnitedPart reservationUnitedPart;
@@ -32,6 +35,7 @@ public class ReservationUnit {
     @Column(name = "reservation_united_part_id")
     private UUID reservationUnitedPartId;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_offer_id", nullable = false, updatable = false, insertable = false)
     private ReservationOffer offer;
@@ -54,6 +58,7 @@ public class ReservationUnit {
     @Column(name = "has_reservation_unit_type", nullable = false)
     private Boolean hasReservationUnitType;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_unit_type_id", insertable = false, updatable = false)
     private ReservationUnitType reservationUnitType;
@@ -61,6 +66,7 @@ public class ReservationUnit {
     @Column(name = "reservation_unit_type_id")
     private UUID reservationUnitTypeId;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_id", updatable = false, insertable = false)
     private Reservation reservation;

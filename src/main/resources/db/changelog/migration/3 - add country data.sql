@@ -26,6 +26,10 @@ INSERT INTO users
 VALUES ('46ffd4fc-4452-4ee8-8192-96fe46f89b4b', '2002-05-29', 's1mpleknigh@mail.ru', 'Vanya', true, 'Zelezinsky',
         '$2a$12$Jj1et9eg0Z7z/PjEuDbyUup64sGUGyEQuedhaBfUfJPFD1frgTXti', 's1mpleknight',
         'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba');
+INSERT INTO users
+VALUES ('540cf5ae-3dc2-4e9e-bf8a-d20388d4b0e7', '2002-05-29', 's1mpleknigh@mail.ru', 'Ivan', true, 'Zelezinsky',
+        '$2a$12$GJXB4pvJZ4cO6Ckp/FlKEex0h2hjQ5rdlYTD7Qh4GSdwldRs4F.Fy', 'windstorm',
+        'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba');
 
 INSERT INTO establishments
 VALUES ('a5123302-0486-40e1-bada-b1d361ab94dc', NULL, NULL, '46ffd4fc-4452-4ee8-8192-96fe46f89b4b', false, 'false',
@@ -44,3 +48,11 @@ VALUES ('f4abd7b8-9238-4e8b-8e9c-b102c15ed02e', '46ffd4fc-4452-4ee8-8192-96fe46f
 
 INSERT INTO reservation_offer_offer_category
 VALUES ('f4abd7b8-9238-4e8b-8e9c-b102c15ed02e', 'b049e188-81c1-4eb6-aefd-abb2fd2b9278');
+
+INSERT INTO reservation_unit_types
+VALUES ('890290c8-692d-43f0-a260-27f20d22d265', 'table', 'f4abd7b8-9238-4e8b-8e9c-b102c15ed02e');
+
+INSERT INTO reservation_units
+VALUES ('b8183c3f-d4b1-41d3-b693-8ef0b25b0e47', 'Table for 4 persons', false, true, false, false, 'First table',
+        'f4abd7b8-9238-4e8b-8e9c-b102c15ed02e', NULL, NULL, '890290c8-692d-43f0-a260-27f20d22d265', NULL, NULL);
+

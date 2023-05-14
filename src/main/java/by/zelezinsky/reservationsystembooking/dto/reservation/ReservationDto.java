@@ -4,8 +4,8 @@ import by.zelezinsky.reservationsystembooking.dto.DtoConstants;
 import by.zelezinsky.reservationsystembooking.dto.reservation.reservationunit.ReservationUnitDto;
 import by.zelezinsky.reservationsystembooking.dto.user.user.UserDto;
 import by.zelezinsky.reservationsystembooking.entity.reservation.ReservationStatus;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -26,10 +26,10 @@ public class ReservationDto {
     @NotNull(message = "User can not be null")
     private UUID userId;
 
-    @JsonFormat(pattern = DtoConstants.TIME_REGEXP, shape = JsonFormat.Shape.STRING)
+    @DateTimeFormat(pattern = DtoConstants.TIME_REGEXP, iso = DateTimeFormat.ISO.TIME)
     private LocalTime reservationTime;
 
-    @JsonFormat(pattern = DtoConstants.DATE_REGEXP, shape = JsonFormat.Shape.STRING)
+    @DateTimeFormat(pattern = DtoConstants.DATE_REGEXP, iso = DateTimeFormat.ISO.DATE)
     private LocalDate reservationDate;
 
     @NotNull(message = "Status can not be empty")

@@ -71,6 +71,7 @@ public class ReservationServiceImpl implements ReservationService {
         mailerSenderService.send(user.getEmail(), offer.getName(),
                 createMessageText(save, offer, CREATE_RESERVATION_MESSAGE));
         return reservationDtoMapper.toDto(save);
+        //todo: one reservation -> one user
     }
 
     @Override
@@ -98,11 +99,12 @@ public class ReservationServiceImpl implements ReservationService {
     public void delete(UUID id) {
         Reservation reservation = findReservation(id);
         List<ReservationUnit> units = reservation.getUnits();
-        units.forEach(unit -> unit.setReservation(null));
+        units.forEach(unit -> unit.setReservationId(null));
         ReservationOffer offer = units.get(0).getOffer();
         String body = createMessageText(reservation, offer, DELETE_RESERVATION_MESSAGE);
         mailerSenderService.send(reservation.getUser().getEmail(), offer.getName(), body);
         reservationUnitRepository.saveAll(units);
+        reservation.getUnits().clear();
         reservationRepository.delete(reservation);
     }
 

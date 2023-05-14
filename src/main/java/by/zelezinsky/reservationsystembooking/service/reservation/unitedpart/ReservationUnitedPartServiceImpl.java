@@ -4,7 +4,9 @@ import by.zelezinsky.reservationsystembooking.dto.reservation.reservationunitedp
 import by.zelezinsky.reservationsystembooking.dto.reservation.reservationunitedpart.ReservationUnitedPartDtoMapper;
 import by.zelezinsky.reservationsystembooking.entity.offer.ReservationOffer;
 import by.zelezinsky.reservationsystembooking.entity.reservation.ReservationUnitedPart;
+import by.zelezinsky.reservationsystembooking.exception.BadRequestException;
 import by.zelezinsky.reservationsystembooking.exception.NotFoundException;
+import by.zelezinsky.reservationsystembooking.repository.ReservationUnitRepository;
 import by.zelezinsky.reservationsystembooking.repository.offer.ReservationOfferRepository;
 import by.zelezinsky.reservationsystembooking.repository.ReservationUnitedPartRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ public class ReservationUnitedPartServiceImpl implements ReservationUnitedPartSe
     private final ReservationUnitedPartRepository repository;
     private final ReservationUnitedPartDtoMapper mapper;
     private final ReservationOfferRepository reservationOfferRepository;
+    private final ReservationUnitRepository reservationUnitRepository;
 
     @Override
     public ReservationUnitedPartDto findById(UUID id, UUID uuid) {
@@ -44,8 +47,13 @@ public class ReservationUnitedPartServiceImpl implements ReservationUnitedPartSe
         ReservationOffer offer = findOffer(id);
         ReservationUnitedPart entity = mapper.toEntity(dto);
         entity.setOfferId(offer.getId());
-        ReservationUnitedPart parent = findUnitedPart(offer, dto.getParentId());
-        entity.setParentId(parent.getParentId());
+        if (Objects.nonNull(dto.getParentId())) {
+            ReservationUnitedPart parent = findUnitedPart(offer, dto.getParentId());
+            entity.setParentId(parent.getParentId());
+            entity.setHasParent(Boolean.TRUE);
+        } else {
+            entity.setHasParent(Boolean.FALSE);
+        }
         return mapper.toDto(repository.save(entity));
     }
 
@@ -53,8 +61,10 @@ public class ReservationUnitedPartServiceImpl implements ReservationUnitedPartSe
     public void delete(UUID id, UUID uuid) {
         ReservationOffer offer = findOffer(id);
         ReservationUnitedPart unitedPart = findUnitedPart(offer, uuid);
+        if (reservationUnitRepository.existsByReservationUnitedPart(unitedPart)) {
+            throw new BadRequestException("There are some reservation units in this united part");
+        }
         repository.delete(unitedPart);
-        //todo: delete reservation units
     }
 
     private ReservationUnitedPart findUnitedPart(ReservationOffer offer, UUID id) {

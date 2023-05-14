@@ -29,6 +29,7 @@ public class ReservationOffer {
     @Column(name = "has_event", nullable = false)
     private Boolean hasEvent;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_id", insertable = false, updatable = false)
     private Event event;
@@ -51,6 +52,7 @@ public class ReservationOffer {
     @Column(name = "reservation_time")
     private LocalTime reservationTime;
 
+    @ToString.Exclude
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "reservation_offer_offer_category",
@@ -82,6 +84,7 @@ public class ReservationOffer {
     @Column(name = "has_establishment", nullable = false)
     private Boolean hasEstablishment;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "establishment_id", insertable = false, updatable = false)
     private Establishment establishment;

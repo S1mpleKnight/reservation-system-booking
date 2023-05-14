@@ -3,6 +3,7 @@ package by.zelezinsky.reservationsystembooking.entity.reservation;
 import by.zelezinsky.reservationsystembooking.entity.offer.ReservationOffer;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.List;
 import java.util.UUID;
@@ -25,6 +26,7 @@ public class ReservationUnitedPart {
     @Column(name = "has_parent", nullable = false)
     private Boolean hasParent;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id", insertable = false, updatable = false)
     private ReservationUnitedPart parent;
@@ -32,6 +34,7 @@ public class ReservationUnitedPart {
     @Column(name = "parent_id")
     private UUID parentId;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_offer_id", insertable = false, updatable = false, nullable = false)
     private ReservationOffer offer;
