@@ -75,6 +75,9 @@ public class EstablishmentServiceImpl implements EstablishmentService {
 
     @Override
     public Page<EstablishmentDto> findAll(Pageable pageable, EstablishmentFilter filter) {
+        if (Objects.isNull(pageable)) {
+            pageable = Pageable.unpaged();
+        }
         return establishmentRepository.findAll(pageable, filter).map(establishmentDtoMapper::toDto);
     }
 
