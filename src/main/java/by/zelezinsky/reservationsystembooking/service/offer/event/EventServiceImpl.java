@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -46,6 +47,9 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Page<EventDto> findAll(Pageable pageable) {
+        if (Objects.isNull(pageable)) {
+            pageable = Pageable.unpaged();
+        }
         return eventRepository.findAll(pageable).map(eventDtoMapper::toDto);
     }
 

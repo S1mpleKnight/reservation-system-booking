@@ -26,3 +26,12 @@ INSERT INTO users
 VALUES ('46ffd4fc-4452-4ee8-8192-96fe46f89b4b', '2002-05-29', 's1mpleknigh@mail.ru', 'Vanya', true, 'Zelezinsky',
         '$2a$12$Jj1et9eg0Z7z/PjEuDbyUup64sGUGyEQuedhaBfUfJPFD1frgTXti', 's1mpleknight',
         'd7c14ad6-0382-4ee0-8ab1-189aa666c6ba');
+
+INSERT INTO establishments
+VALUES ('a5123302-0486-40e1-bada-b1d361ab94dc', NULL, NULL, '46ffd4fc-4452-4ee8-8192-96fe46f89b4b', false, 'false',
+        true, true, 'false', NULL, NULL, NULL);
+
+INSERT INTO events
+VALUES ('af66067a-a121-4e84-b3cb-47914f6badcf', '46ffd4fc-4452-4ee8-8192-96fe46f89b4b', 'Postman testing', '2023-05-15',
+        true, false, '2023-05-14', NULL, 'First test event');
+
