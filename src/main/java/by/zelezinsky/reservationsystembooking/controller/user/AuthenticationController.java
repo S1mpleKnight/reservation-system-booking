@@ -5,6 +5,7 @@ import by.zelezinsky.reservationsystembooking.dto.user.authentication.Authentica
 import by.zelezinsky.reservationsystembooking.dto.user.user.UserPreviewDto;
 import by.zelezinsky.reservationsystembooking.service.security.JwtAuthenticationService;
 import by.zelezinsky.reservationsystembooking.service.user.user.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
+
 import java.util.Map;
 
 @RestController

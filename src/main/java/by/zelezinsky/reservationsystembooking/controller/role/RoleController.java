@@ -4,13 +4,14 @@ import by.zelezinsky.reservationsystembooking.controller.Url;
 import by.zelezinsky.reservationsystembooking.dto.user.role.RoleDto;
 import by.zelezinsky.reservationsystembooking.security.Authorities;
 import by.zelezinsky.reservationsystembooking.service.user.role.RoleService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+
 import java.util.UUID;
 
 @RestController

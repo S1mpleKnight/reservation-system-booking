@@ -3,13 +3,12 @@ package by.zelezinsky.reservationsystembooking.dto.address.country;
 import by.zelezinsky.reservationsystembooking.dto.DtoConstants;
 import lombok.Data;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import java.util.UUID;
 
 @Data
-@Valid
 public class CountryDto {
 
     private UUID id;

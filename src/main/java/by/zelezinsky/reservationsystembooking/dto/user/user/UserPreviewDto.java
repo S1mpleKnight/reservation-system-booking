@@ -1,41 +1,40 @@
 package by.zelezinsky.reservationsystembooking.dto.user.user;
 
 import by.zelezinsky.reservationsystembooking.entity.user.UserRole;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.Valid;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 
 import static by.zelezinsky.reservationsystembooking.dto.DtoConstants.*;
 
 @Data
-@Valid
 public class UserPreviewDto {
 
-    @NotBlank(message = "Username can not be empty")
-    @Pattern(regexp = USERNAME_REGEXP, message = "Username can not be empty")
+    @Pattern(regexp = USERNAME_REGEXP, message = "Username must be between 8 and 50 letters and numbers")
     private String username;
 
-    @NotBlank(message = "First name can not be empty")
-    @Pattern(regexp = NAME_REGEXP, message = "First name can not be empty")
+    @NotBlank(message = "First name must be between 1 and 50 letters")
+    @Pattern(regexp = NAME_REGEXP, message = "First name must be between 1 and 50 letters")
     private String firstname;
 
-    @NotBlank(message = "Last name can not be empty")
-    @Pattern(regexp = NAME_REGEXP, message = "Last name can not be empty")
+    @NotBlank(message = "Last name must be between 1 and 50 letters")
+    @Pattern(regexp = NAME_REGEXP, message = "Last name must be between 1 and 50 letters")
     private String lastname;
 
-    @NotBlank(message = "Birthday can not be empty")
-    @JsonFormat(pattern = DATE_REGEXP, shape = JsonFormat.Shape.STRING)
+    @NotNull(message = "Birthday can not be empty")
+    @DateTimeFormat(pattern = DATE_REGEXP)
     private LocalDate birthday;
 
+    @NotNull(message = "Password can not be empty")
     @NotBlank(message = "Password can not be empty")
     private String password;
 
+    @NotBlank(message = "Invalid email")
     @Email(message = "Invalid email")
     private String email;
 

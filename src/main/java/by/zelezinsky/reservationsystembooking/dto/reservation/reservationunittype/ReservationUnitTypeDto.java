@@ -1,11 +1,11 @@
 package by.zelezinsky.reservationsystembooking.dto.reservation.reservationunittype;
 
 import by.zelezinsky.reservationsystembooking.dto.DtoConstants;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 import java.util.UUID;
 
 @Data
