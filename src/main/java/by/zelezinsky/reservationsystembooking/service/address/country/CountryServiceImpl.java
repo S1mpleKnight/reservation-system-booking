@@ -36,7 +36,7 @@ public class CountryServiceImpl implements CountryService {
     public CountryDto create(CountryDto dto) {
         Optional<Country> optionalCountry = countryRepository.findByName(dto.getName());
         if (optionalCountry.isPresent()) {
-            return countryDtoMapper.toDto(optionalCountry.get());
+            throw new BadRequestException("Country with that name already exists");
         }
         Country entity = countryDtoMapper.toEntity(dto);
         return countryDtoMapper.toDto(countryRepository.save(entity));
