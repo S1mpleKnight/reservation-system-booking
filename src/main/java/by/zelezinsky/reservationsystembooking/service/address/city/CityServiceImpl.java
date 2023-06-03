@@ -44,7 +44,7 @@ public class CityServiceImpl implements CityService {
         Country country = findCountry(dto.getCountryId());
         Optional<City> optionalCity = cityRepository.findByNameAndCountry(dto.getName(), country);
         if (optionalCity.isPresent()) {
-            return cityDtoMapper.toDto(optionalCity.get());
+            throw new BadRequestException("Such city already exists");
         }
         City entity = cityDtoMapper.toEntity(dto);
         entity.setCountry(country);
