@@ -18,6 +18,10 @@ public interface Url {
         interface Registration {
             String BASE = "registration/";
         }
+
+        interface Profile {
+            String BASE = "profile/";
+        }
     }
 
     interface Event {

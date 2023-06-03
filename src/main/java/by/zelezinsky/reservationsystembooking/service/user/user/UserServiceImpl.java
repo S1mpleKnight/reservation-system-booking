@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -86,6 +87,30 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         Role role = findRole(dto);
         entity.setRole(role);
         return userDtoMapper.toPreviewDto(userRepository.save(entity));
+    }
+
+    @Override
+    public UserPreviewDto getProfile(Principal principal) {
+        User user = findUserByPrincipal(principal);
+        return userDtoMapper.toPreviewDto(user);
+    }
+
+    @Override
+    public UserPreviewDto updateProfile(Principal principal, UserPreviewDto dto) {
+        User oldUser = findUserByPrincipal(principal);
+        if (!oldUser.getUsername().equals(dto.getUsername())) {
+            Optional<User> byUsername = userRepository.findByUsername(dto.getUsername());
+            if (byUsername.isPresent()) {
+                throw new BadRequestException("User with username already exists");
+            }
+        }
+        User newUser = userDtoMapper.toEntity(oldUser, dto);
+        return userDtoMapper.toPreviewDto(userRepository.save(newUser));
+    }
+
+    private User findUserByPrincipal(Principal principal) {
+        return userRepository.findByUsername(principal.getName())
+                .orElseThrow(() -> new NotFoundException("Can not find user by nickname: ".concat(principal.getName())));
     }
 
     private Role findRole(UUID id) {

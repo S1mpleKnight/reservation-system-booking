@@ -9,11 +9,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-
+import java.security.Principal;
 import java.util.Map;
 
 @RestController
@@ -34,5 +32,15 @@ public class AuthenticationController {
     public UserPreviewDto register(@Valid @RequestBody UserPreviewDto dto) {
         dto.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
         return userService.register(dto);
+    }
+
+    @GetMapping(Url.User.Profile.BASE)
+    public UserPreviewDto getProfile(Principal principal) {
+        return userService.getProfile(principal);
+    }
+
+    @PutMapping(Url.User.Profile.BASE)
+    public UserPreviewDto updateProfile(Principal principal, @Valid @RequestBody UserPreviewDto dto) {
+        return userService.updateProfile(principal, dto);
     }
 }

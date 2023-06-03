@@ -5,6 +5,7 @@ import by.zelezinsky.reservationsystembooking.dto.user.user.UserPreviewDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.security.Principal;
 import java.util.UUID;
 
 public interface UserService {
@@ -20,4 +21,8 @@ public interface UserService {
     void delete(UUID id);
 
     UserPreviewDto register(UserPreviewDto dto);
+
+    UserPreviewDto getProfile(Principal principal);
+
+    UserPreviewDto updateProfile(Principal principal, UserPreviewDto dto);
 }
