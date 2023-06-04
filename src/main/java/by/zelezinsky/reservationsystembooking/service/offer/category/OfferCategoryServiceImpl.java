@@ -6,6 +6,7 @@ import by.zelezinsky.reservationsystembooking.entity.offer.OfferCategory;
 import by.zelezinsky.reservationsystembooking.exception.BadRequestException;
 import by.zelezinsky.reservationsystembooking.exception.NotFoundException;
 import by.zelezinsky.reservationsystembooking.repository.OfferCategoryRepository;
+import by.zelezinsky.reservationsystembooking.repository.offer.ReservationOfferRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +21,7 @@ public class OfferCategoryServiceImpl implements OfferCategoryService {
 
     private final OfferCategoryRepository offerCategoryRepository;
     private final OfferCategoryDtoMapper offerCategoryDtoMapper;
+    private final ReservationOfferRepository reservationOfferRepository;
 
     @Override
     public OfferCategoryDto create(OfferCategoryDto dto) {
@@ -56,6 +58,10 @@ public class OfferCategoryServiceImpl implements OfferCategoryService {
     @Override
     public void delete(UUID id) {
         OfferCategory category = findCategory(id);
+        Boolean registeredByOffer = reservationOfferRepository.existsByCategoriesContains(category);
+        if (registeredByOffer) {
+            throw new BadRequestException("There are some reservation offers with this category");
+        }
         offerCategoryRepository.delete(category);
     }
 

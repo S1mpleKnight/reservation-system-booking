@@ -44,10 +44,12 @@ public class CountryServiceImpl implements CountryService {
 
     @Override
     public CountryDto update(UUID id, CountryDto dto) {
-        if (countryRepository.existsByName(dto.getName())) {
-            throw new BadRequestException("Country with that name already exists");
-        }
         Country country = findCountry(id);
+        if (!country.getName().equals(dto.getName())) {
+            if (countryRepository.existsByName(dto.getName())) {
+                throw new BadRequestException("Country with that name already exists");
+            }
+        }
         country = countryDtoMapper.toEntity(country, dto);
         return countryDtoMapper.toDto(countryRepository.save(country));
     }

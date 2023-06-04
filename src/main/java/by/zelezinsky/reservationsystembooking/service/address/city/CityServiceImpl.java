@@ -55,8 +55,10 @@ public class CityServiceImpl implements CityService {
     public CityDto update(UUID id, CityDto dto) {
         City city = findCity(id);
         Country country = findCountry(dto.getCountryId());
-        if (cityRepository.existsByNameAndCountry(dto.getName(), country)) {
-            throw new BadRequestException("Such city already exists");
+        if (!city.getName().equals(dto.getName())) {
+            if (cityRepository.existsByNameAndCountry(dto.getName(), country)) {
+                throw new BadRequestException("Such city already exists");
+            }
         }
         city = cityDtoMapper.toEntity(city, dto);
         city.setCountry(country);
