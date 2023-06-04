@@ -21,6 +21,7 @@ public interface Url {
 
         interface Profile {
             String BASE = "profile/";
+            String PASSWORD = BASE + "password/";
         }
     }
 

@@ -36,6 +36,7 @@ public class UserDto {
     @JsonFormat(pattern = DATE_REGEXP, shape = JsonFormat.Shape.STRING)
     private LocalDate birthday;
 
+    @NotNull(message = "Password can not be empty")
     @NotBlank(message = "Password can not be empty")
     private String password;
 

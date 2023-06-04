@@ -10,7 +10,7 @@ import jakarta.validation.constraints.Pattern;
 public class AuthenticationDto {
 
     @NotBlank(message = "Username can not be empty")
-    @Pattern(regexp = DtoConstants.NAME_REGEXP, message = "Username should be between 1 and 50 letters")
+    @Pattern(regexp = DtoConstants.USERNAME_REGEXP, message = "Username should be between 1 and 50 letters")
     private String username;
 
     @NotBlank
