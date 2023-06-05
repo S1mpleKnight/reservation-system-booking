@@ -1,7 +1,5 @@
 package by.zelezinsky.reservationsystembooking.service.offer.establishment;
 
-import by.zelezinsky.reservationsystembooking.dto.address.city.CityDtoMapper;
-import by.zelezinsky.reservationsystembooking.dto.address.country.CountryDtoMapper;
 import by.zelezinsky.reservationsystembooking.dto.filter.EstablishmentFilter;
 import by.zelezinsky.reservationsystembooking.dto.offer.establishment.EstablishmentDto;
 import by.zelezinsky.reservationsystembooking.dto.offer.establishment.EstablishmentDtoMapper;
@@ -22,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -33,22 +30,31 @@ public class EstablishmentServiceImpl implements EstablishmentService {
     private final EstablishmentRepository establishmentRepository;
     private final UserRepository userRepository;
     private final CityRepository cityRepository;
-    private final CityDtoMapper cityDtoMapper;
     private final CountryRepository countryRepository;
-    private final CountryDtoMapper countryDtoMapper;
 
     @Override
     @Transactional
     public EstablishmentDto create(EstablishmentDto dto) {
         User user = findUser(dto.getContactId());
-        City city = getCity(dto);
-        Country country = getCountry(dto);
-        if (establishmentRepository.existsByCountryAndCityAndStreetAndBuildingAndApartment(country, city,
-                dto.getStreet(), dto.getBuilding(), dto.getApartment())) {
+        City city = findCity(dto.getCityId());
+        if (dto.getHasCity() && Objects.isNull(city)) {
+            throw new BadRequestException("City can not be empty");
+        }
+        Country country = findCountry(dto.getCountryId());
+        if (dto.getHasCountry() && Objects.isNull(country)) {
+            throw new BadRequestException("Country can not be empty");
+        }
+        if (dto.getHasCountry() && dto.getHasCity() && !city.getCountry().equals(country)) {
+            throw new BadRequestException("This city do not belongs to the country");
+        }
+        if (establishmentRepository.findByCountryAndCityAndStreetAndBuildingAndApartment(country, city,
+                dto.getStreet(), dto.getBuilding(), dto.getApartment()).isPresent()) {
             throw new BadRequestException("Such an establishment is already exists");
         }
         Establishment entity = establishmentDtoMapper.toEntity(dto);
-        entity.setContactId(user.getId());
+        entity.setCity(city);
+        entity.setCountry(country);
+        entity.setContact(user);
         return establishmentDtoMapper.toDto(establishmentRepository.save(entity));
     }
 
@@ -57,14 +63,25 @@ public class EstablishmentServiceImpl implements EstablishmentService {
     public EstablishmentDto update(UUID id, EstablishmentDto dto) {
         Establishment establishment = findEstablishment(id);
         User user = findUser(dto.getContactId());
-        City city = getCity(dto);
-        Country country = getCountry(dto);
-        if (establishmentRepository.existsByCountryAndCityAndStreetAndBuildingAndApartment(country, city,
-                dto.getStreet(), dto.getBuilding(), dto.getApartment())) {
+        City city = findCity(dto.getCityId());
+        if (dto.getHasCity() && Objects.isNull(city)) {
+            throw new BadRequestException("City can not be empty");
+        }
+        Country country = findCountry(dto.getCountryId());
+        if (dto.getHasCountry() && Objects.isNull(country)) {
+            throw new BadRequestException("Country can not be empty");
+        }
+        if (dto.getHasCountry() && dto.getHasCity() && !city.getCountry().equals(country)) {
+            throw new BadRequestException("This city do not belongs to the country");
+        }
+        if (establishmentRepository.findByCountryAndCityAndStreetAndBuildingAndApartment(country, city,
+                dto.getStreet(), dto.getBuilding(), dto.getApartment()).isPresent()) {
             throw new BadRequestException("Such an establishment is already exists");
         }
         establishment = establishmentDtoMapper.toEntity(establishment, dto);
-        establishment.setContactId(user.getId());
+        establishment.setCity(city);
+        establishment.setCountry(country);
+        establishment.setContact(user);
         return establishmentDtoMapper.toDto(establishmentRepository.save(establishment));
     }
 
@@ -78,7 +95,8 @@ public class EstablishmentServiceImpl implements EstablishmentService {
         if (Objects.isNull(pageable)) {
             pageable = Pageable.unpaged();
         }
-        return establishmentRepository.findAll(pageable, filter).map(establishmentDtoMapper::toDto);
+        Page<Establishment> all = establishmentRepository.findAll(pageable, filter);
+        return all.map(establishmentDtoMapper::toDto);
     }
 
     @Override
@@ -88,12 +106,12 @@ public class EstablishmentServiceImpl implements EstablishmentService {
     }
 
     private City findCity(UUID id) {
-        return cityRepository.findById(id)
+        return Objects.isNull(id) ? null : cityRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("City", id.toString()));
     }
 
     private Country findCountry(UUID id) {
-        return countryRepository.findById(id)
+        return Objects.isNull(id) ? null : countryRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Country", id.toString()));
     }
 
@@ -103,31 +121,5 @@ public class EstablishmentServiceImpl implements EstablishmentService {
 
     private User findUser(UUID id) {
         return userRepository.findById(id).orElseThrow(() -> new NotFoundException("User", id.toString()));
-    }
-
-    private Country getCountry(EstablishmentDto dto) {
-        Country country;
-        if (Objects.nonNull(dto.getCountryId())) {
-            country = findCountry(dto.getCountryId());
-        } else {
-            country = countryDtoMapper.toEntity(dto.getCountry());
-            Optional<Country> optionalCountry = countryRepository.findByName(dto.getCountry().getName());
-            if (optionalCountry.isPresent()) {
-                return optionalCountry.get();
-            }
-            country = countryRepository.save(country);
-        }
-        return country;
-    }
-
-    private City getCity(EstablishmentDto dto) {
-        City city;
-        if (Objects.nonNull(dto.getCityId())) {
-            city = findCity(dto.getCityId());
-        } else {
-            city = cityDtoMapper.toEntity(dto.getCity());
-            city = cityRepository.save(city);
-        }
-        return city;
     }
 }

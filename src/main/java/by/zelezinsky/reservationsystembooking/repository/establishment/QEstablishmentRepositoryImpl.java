@@ -66,8 +66,9 @@ public class QEstablishmentRepositoryImpl extends BaseRepository implements QEst
     }
 
     private void addJoin(JPQLQuery<Establishment> query) {
-        query.leftJoin(QUser.user)
-                .leftJoin(QCity.city)
-                .leftJoin(QCountry.country);
+        query.leftJoin(QEstablishment.establishment.contact, QUser.user)
+
+                .leftJoin(QEstablishment.establishment.city, QCity.city)
+                .leftJoin(QEstablishment.establishment.country, QCountry.country);
     }
 }

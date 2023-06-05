@@ -15,13 +15,15 @@ public interface EstablishmentDtoMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "contact", ignore = true)
-    @Mapping(target = "contactId", ignore = true)
+    @Mapping(target = "city", ignore = true)
+    @Mapping(target = "country", ignore = true)
     @Mapping(target = "offers", ignore = true)
     Establishment toEntity(EstablishmentDto dto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "contact", ignore = true)
-    @Mapping(target = "contactId", ignore = true)
+    @Mapping(target = "city", ignore = true)
+    @Mapping(target = "country", ignore = true)
     @Mapping(target = "offers", ignore = true)
     Establishment toEntity(@MappingTarget Establishment establishment, EstablishmentDto dto);
 }

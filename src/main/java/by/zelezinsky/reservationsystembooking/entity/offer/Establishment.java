@@ -21,13 +21,10 @@ public class Establishment {
     private UUID id = UUID.randomUUID();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", updatable = false, insertable = false, nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User contact;
 
-    @Column(name = "user_id", nullable = false)
-    private UUID contactId;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "city_id")
     private City city;
 
@@ -40,7 +37,7 @@ public class Establishment {
     @Column(name = "has_street", nullable = false)
     private String hasStreet;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "country_id")
     private Country country;
 

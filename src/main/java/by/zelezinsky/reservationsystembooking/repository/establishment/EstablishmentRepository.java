@@ -6,12 +6,13 @@ import by.zelezinsky.reservationsystembooking.entity.offer.Establishment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface EstablishmentRepository extends JpaRepository<Establishment, UUID>, QEstablishmentRepository {
 
-    Boolean existsByCountryAndCityAndStreetAndBuildingAndApartment(
+    Optional<Establishment> findByCountryAndCityAndStreetAndBuildingAndApartment(
             Country country, City city, String street, String building, String apartment
     );
 
