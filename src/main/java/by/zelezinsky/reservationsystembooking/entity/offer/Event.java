@@ -43,9 +43,6 @@ public class Event {
     private List<ReservationOffer> offer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false, updatable = false, insertable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User contact;
-
-    @Column(name = "user_id")
-    private UUID contactId;
 }

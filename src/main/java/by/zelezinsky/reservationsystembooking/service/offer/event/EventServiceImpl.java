@@ -4,6 +4,7 @@ import by.zelezinsky.reservationsystembooking.dto.offer.event.EventDto;
 import by.zelezinsky.reservationsystembooking.dto.offer.event.EventDtoMapper;
 import by.zelezinsky.reservationsystembooking.entity.offer.Event;
 import by.zelezinsky.reservationsystembooking.entity.user.User;
+import by.zelezinsky.reservationsystembooking.exception.BadRequestException;
 import by.zelezinsky.reservationsystembooking.exception.NotFoundException;
 import by.zelezinsky.reservationsystembooking.repository.event.EventRepository;
 import by.zelezinsky.reservationsystembooking.repository.UserRepository;
@@ -27,7 +28,11 @@ public class EventServiceImpl implements EventService {
     public EventDto create(EventDto dto) {
         User user = findUser(dto.getContactId());
         Event entity = eventDtoMapper.toEntity(dto);
-        entity.setContactId(user.getId());
+        if (eventRepository.findByContactAndTitleAndStartDateAndEndDateAndTime(user, entity.getTitle(),
+                entity.getStartDate(), entity.getEndDate(), entity.getTime()).isPresent()) {
+            throw new BadRequestException("Such event is already exist");
+        }
+        entity.setContact(user);
         return eventDtoMapper.toDto(eventRepository.save(entity));
     }
 
@@ -36,7 +41,11 @@ public class EventServiceImpl implements EventService {
         Event event = findEvent(id);
         User user = findUser(dto.getContactId());
         event = eventDtoMapper.toEntity(event, dto);
-        event.setContactId(user.getId());
+        event.setContact(user);
+        if (eventRepository.findByContactAndTitleAndStartDateAndEndDateAndTime(event.getContact(), event.getTitle(),
+                event.getStartDate(), event.getEndDate(), event.getTime()).isPresent()) {
+            throw new BadRequestException("Such event is already exist");
+        }
         return eventDtoMapper.toDto(eventRepository.save(event));
     }
 
