@@ -2,11 +2,13 @@ package by.zelezinsky.reservationsystembooking.entity.offer;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @Data
 @Entity
+@NoArgsConstructor
 @Table(name = "additional_offer_info")
 public class AdditionalOfferInfo {
 
@@ -24,9 +26,6 @@ public class AdditionalOfferInfo {
     private String eventUrl;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-    @JoinColumn(name = "offer_id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "offer_id")
     private ReservationOffer offer;
-
-    @Column(name = "offer_id", nullable = false)
-    private UUID offerId;
 }

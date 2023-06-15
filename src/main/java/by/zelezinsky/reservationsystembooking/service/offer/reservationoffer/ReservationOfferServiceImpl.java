@@ -14,6 +14,7 @@ import by.zelezinsky.reservationsystembooking.repository.event.EventRepository;
 import by.zelezinsky.reservationsystembooking.repository.offer.ReservationOfferRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -41,7 +42,7 @@ public class ReservationOfferServiceImpl implements ReservationOfferService {
     public ReservationOfferDto create(ReservationOfferDto dto) {
         ReservationOffer entity = reservationOfferDtoMapper.toEntity(dto);
         User user = findUser(dto.getContactId());
-        entity.setContactId(user.getId());
+        entity.setContact(user);
         setOfferEvent(dto, entity);
         setOfferEstablishment(dto, entity);
         setOfferAdditionalInfo(dto, entity);
@@ -59,9 +60,12 @@ public class ReservationOfferServiceImpl implements ReservationOfferService {
         setOfferEvent(dto, offer);
         setOfferEstablishment(dto, offer);
         updateAdditionalInfo(dto, offer);
+        offer.setContact(user);
         updateOfferCategories(dto, offer);
-        offer.setContactId(user.getId());
-        return reservationOfferDtoMapper.toDto(reservationOfferRepository.save(offer));
+        ReservationOffer saved = reservationOfferRepository.save(offer);
+        saved.getInfo().setOffer(saved);
+        additionalOfferInfoRepository.save(saved.getInfo());
+        return reservationOfferDtoMapper.toDto(saved);
     }
 
     @Override
@@ -74,7 +78,8 @@ public class ReservationOfferServiceImpl implements ReservationOfferService {
         if (Objects.isNull(pageable)) {
             pageable = Pageable.unpaged();
         }
-        return reservationOfferRepository.findAll(pageable, filter).map(reservationOfferDtoMapper::toDto);
+        Page<ReservationOffer> findAll = reservationOfferRepository.findAll(pageable, filter);
+        return findAll.map(reservationOfferDtoMapper::toDto);
     }
 
     @Override
@@ -88,7 +93,7 @@ public class ReservationOfferServiceImpl implements ReservationOfferService {
     public ReservationOfferDto changeStatusAndContact(UUID id, UUID contactId, ReservationOfferStatus status) {
         ReservationOffer offer = findOffer(id);
         User user = findUser(contactId);
-        offer.setContactId(user.getId());
+        offer.setContact(user);
         offer.setOfferStatus(status);
         return reservationOfferDtoMapper.toDto(reservationOfferRepository.save(offer));
     }
@@ -127,7 +132,7 @@ public class ReservationOfferServiceImpl implements ReservationOfferService {
     private void setOfferEvent(ReservationOfferDto dto, ReservationOffer entity) {
         if (Boolean.TRUE.equals(dto.getHasEvent())) {
             Event event = findEvent(dto.getEventId());
-            entity.setEventId(event.getId());
+            entity.setEvent(event);
             entity.setHasEvent(Boolean.TRUE);
         } else {
             entity.setHasEvent(Boolean.FALSE);
@@ -137,7 +142,7 @@ public class ReservationOfferServiceImpl implements ReservationOfferService {
     private void setOfferEstablishment(ReservationOfferDto dto, ReservationOffer entity) {
         if (Boolean.TRUE.equals(dto.getHasEstablishment())) {
             Establishment establishment = findEstablishment(dto.getEstablishmentId());
-            entity.setEstablishmentId(establishment.getId());
+            entity.setEstablishment(establishment);
             entity.setHasEstablishment(Boolean.TRUE);
         } else {
             entity.setHasEstablishment(Boolean.FALSE);
@@ -148,7 +153,7 @@ public class ReservationOfferServiceImpl implements ReservationOfferService {
         if (Boolean.TRUE.equals(dto.getHasAdditionalInfo())) {
             AdditionalOfferInfo info = additionalOfferInfoDtoMapper.toEntity(dto.getAdditionalOfferInfo());
             entity.setInfo(info);
-            info.setOfferId(entity.getId());
+            info.setOffer(entity);
             entity.setHasAdditionalInfo(Boolean.TRUE);
         } else {
             entity.setHasAdditionalInfo(Boolean.FALSE);
@@ -162,18 +167,24 @@ public class ReservationOfferServiceImpl implements ReservationOfferService {
     }
 
     private void updateOfferCategories(ReservationOfferDto dto, ReservationOffer entity) {
-        List<OfferCategory> allCategories = offerCategoryRepository.findAllById(dto.getCategoryIds());
-        checkOfferCategories(dto, allCategories);
-        entity.getCategories().clear();
-        entity.getCategories().addAll(allCategories);
+        if (CollectionUtils.isNotEmpty(dto.getCategoryIds())) {
+            List<OfferCategory> allCategories = offerCategoryRepository.findAllById(dto.getCategoryIds());
+            checkOfferCategories(dto, allCategories);
+            entity.getCategories().clear();
+            entity.getCategories().addAll(allCategories);
+        }
     }
 
     private void updateAdditionalInfo(ReservationOfferDto dto, ReservationOffer offer) {
         if (Boolean.TRUE.equals(dto.getHasAdditionalInfo())) {
-            AdditionalOfferInfo info
-                    = additionalOfferInfoDtoMapper.toEntity(offer.getInfo(), dto.getAdditionalOfferInfo());
+            if (offer.getHasAdditionalInfo()) {
+                if (Objects.nonNull(offer.getInfo())) {
+                    additionalOfferInfoRepository.delete(offer.getInfo());
+                }
+            }
+            AdditionalOfferInfo info = additionalOfferInfoDtoMapper.toEntity(dto.getAdditionalOfferInfo());
+            info = additionalOfferInfoRepository.save(info);
             offer.setInfo(info);
-            info.setOfferId(offer.getId());
             offer.setHasAdditionalInfo(Boolean.TRUE);
         } else {
             offer.setHasAdditionalInfo(Boolean.FALSE);

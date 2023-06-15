@@ -8,15 +8,14 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring")
 public interface AdditionalOfferInfoDtoMapper {
 
+    @Mapping(target = "offerId", source = "offer.id")
     AdditionalOfferInfoDto toDto(AdditionalOfferInfo info);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "offer", ignore = true)
-    @Mapping(target = "offerId", ignore = true)
     AdditionalOfferInfo toEntity(AdditionalOfferInfoDto dto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "offer", ignore = true)
-    @Mapping(target = "offerId", ignore = true)
     AdditionalOfferInfo toEntity(@MappingTarget AdditionalOfferInfo info, AdditionalOfferInfoDto dto);
 }

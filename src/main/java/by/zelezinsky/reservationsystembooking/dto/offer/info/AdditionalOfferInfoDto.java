@@ -16,6 +16,5 @@ public class AdditionalOfferInfoDto {
 
     private String eventUrl;
 
-    @NotNull(message = "Offer can not be empty")
     private UUID offerId;
 }

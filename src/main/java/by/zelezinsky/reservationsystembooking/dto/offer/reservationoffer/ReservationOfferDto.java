@@ -17,6 +17,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -33,7 +34,7 @@ public class ReservationOfferDto {
     private UUID id;
 
     @NotNull(message = "Name can not be empty")
-    @Pattern(message = "Name should be between 1 and 50 letters", regexp = DtoConstants.NAME_REGEXP)
+    @Pattern(message = "Name should be between 1 and 50 letters", regexp = DtoConstants.OFFER_NAME_REGEXP)
     private String name;
 
     @NotNull(message = "Event flag can not be empty")
@@ -48,13 +49,13 @@ public class ReservationOfferDto {
     private List<ReservationUnitedPartDto> unitedParts;
 
     @NotNull(message = "Reservation date can not be empty")
-    @JsonFormat(pattern = DATE_REGEXP, shape = JsonFormat.Shape.STRING)
+    @DateTimeFormat(pattern = DATE_REGEXP)
     private LocalDate reservationDate;
 
     @NotNull(message = "Time flag can not be empty")
     private Boolean hasTime;
 
-    @JsonFormat(pattern = TIME_REGEXP, shape = JsonFormat.Shape.STRING)
+    @DateTimeFormat(pattern = TIME_REGEXP)
     private LocalTime reservationTime;
 
     private List<OfferCategoryDto> categories;
@@ -64,13 +65,13 @@ public class ReservationOfferDto {
     @NotNull(message = "Info flag can not be empty")
     private Boolean hasAdditionalInfo;
 
-    @NotBlank(message = "Reservation type can no be empty")
+    @NotNull(message = "Reservation type can no be empty")
     private ReservationType reservationType;
 
-    @NotBlank(message = "Reservation order type can not be empty")
+    @NotNull(message = "Reservation order type can not be empty")
     private OrderReservationType orderType;
 
-    @NotBlank(message = "Reservation offer status can not be empty")
+    @NotNull(message = "Reservation offer status can not be empty")
     private ReservationOfferStatus offerStatus;
 
     private UserDto contact;

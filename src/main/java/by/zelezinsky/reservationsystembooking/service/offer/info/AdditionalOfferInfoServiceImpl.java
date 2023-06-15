@@ -26,7 +26,7 @@ public class AdditionalOfferInfoServiceImpl implements AdditionalOfferInfoServic
     public AdditionalOfferInfoDto create(AdditionalOfferInfoDto dto) {
         ReservationOffer offer = findOffer(dto.getOfferId());
         AdditionalOfferInfo entity = dtoMapper.toEntity(dto);
-        entity.setOfferId(offer.getId());
+        entity.setOffer(offer);
         return dtoMapper.toDto(infoRepository.save(entity));
     }
 
@@ -35,7 +35,7 @@ public class AdditionalOfferInfoServiceImpl implements AdditionalOfferInfoServic
         AdditionalOfferInfo info = findInfo(id);
         ReservationOffer offer = findOffer(dto.getOfferId());
         info = dtoMapper.toEntity(info, dto);
-        info.setOfferId(offer.getId());
+        info.setOffer(offer);
         return dtoMapper.toDto(infoRepository.save(info));
     }
 

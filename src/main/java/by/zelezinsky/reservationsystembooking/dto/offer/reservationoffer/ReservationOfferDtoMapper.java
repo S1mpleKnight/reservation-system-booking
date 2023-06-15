@@ -26,11 +26,8 @@ public interface ReservationOfferDtoMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "event", ignore = true)
-    @Mapping(target = "eventId", ignore = true)
     @Mapping(target = "contact", ignore = true)
-    @Mapping(target = "contactId", ignore = true)
     @Mapping(target = "establishment", ignore = true)
-    @Mapping(target = "establishmentId", ignore = true)
     @Mapping(target = "info", ignore = true)
     @Mapping(target = "offerStatus", ignore = true)
     @Mapping(target = "types", ignore = true)
@@ -40,11 +37,8 @@ public interface ReservationOfferDtoMapper {
     ReservationOffer toEntity(ReservationOfferDto dto);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "eventId", ignore = true)
     @Mapping(target = "contact", ignore = true)
-    @Mapping(target = "contactId", ignore = true)
     @Mapping(target = "establishment", ignore = true)
-    @Mapping(target = "establishmentId", ignore = true)
     @Mapping(target = "info", ignore = true)
     @Mapping(target = "types", ignore = true)
     @Mapping(target = "categories", ignore = true)
@@ -52,7 +46,11 @@ public interface ReservationOfferDtoMapper {
     @Mapping(target = "reservationUnits", ignore = true)
     ReservationOffer toEntity(@MappingTarget ReservationOffer offer, ReservationOfferDto dto);
 
+    @Mapping(target = "eventId", source = "event.id")
+    @Mapping(target = "contactId", source = "contact.id")
+    @Mapping(target = "establishmentId", source = "establishment.id")
     @Mapping(target = "categoryIds", qualifiedByName = CATEGORY_IDS_QUALIFIER, source = "offer")
+    @Mapping(target = "additionalOfferInfo", source = "info")
     ReservationOfferDto toDto(ReservationOffer offer);
 
     @Named(CATEGORY_IDS_QUALIFIER)

@@ -31,11 +31,9 @@ public class ReservationOffer {
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_id", insertable = false, updatable = false)
+    @JoinColumn(name = "event_id")
     private Event event;
 
-    @Column(name = "event_id")
-    private UUID eventId;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "offer")
     private List<ReservationUnit> reservationUnits;
@@ -75,22 +73,17 @@ public class ReservationOffer {
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User contact;
-
-    @Column(name = "user_id", nullable = false)
-    private UUID contactId;
 
     @Column(name = "has_establishment", nullable = false)
     private Boolean hasEstablishment;
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "establishment_id", insertable = false, updatable = false)
+    @JoinColumn(name = "establishment_id")
     private Establishment establishment;
 
-    @Column(name = "establishment_id")
-    private UUID establishmentId;
 
     @Column(name = "has_additional_info", nullable = false)
     private Boolean hasAdditionalInfo;

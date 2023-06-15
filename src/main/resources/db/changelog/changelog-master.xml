@@ -25,4 +25,11 @@
                  relativeToChangelogFile="false"
                  stripComments="true"/>
     </changeSet>
+
+    <changeSet author="Ivan Zelezinski" id="4 - drop not null additional info">
+        <sqlFile encoding="utf8"
+                 path="classpath:db/changelog/migration/4 - drop not null additional info.sql"
+                 relativeToChangelogFile="false"
+                 stripComments="true"/>
+    </changeSet>
 </databaseChangeLog>
