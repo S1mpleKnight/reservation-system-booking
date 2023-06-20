@@ -4,8 +4,8 @@ import by.zelezinsky.reservationsystembooking.dto.DtoConstants;
 import by.zelezinsky.reservationsystembooking.entity.offer.OrderReservationType;
 import by.zelezinsky.reservationsystembooking.entity.offer.ReservationOfferStatus;
 import by.zelezinsky.reservationsystembooking.entity.offer.ReservationType;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -18,18 +18,18 @@ public class ReservationOfferFilter {
     private Boolean hasEvent;
     private List<UUID> eventIds;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DtoConstants.DATE_REGEXP)
+    @DateTimeFormat(pattern = DtoConstants.DATE_REGEXP)
     private LocalDate dateFrom;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DtoConstants.DATE_REGEXP)
+    @DateTimeFormat(pattern = DtoConstants.DATE_REGEXP)
     private LocalDate dateTo;
 
     private Boolean hasTime;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DtoConstants.TIME_REGEXP)
+    @DateTimeFormat(pattern = DtoConstants.TIME_REGEXP)
     private LocalTime timeFrom;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DtoConstants.TIME_REGEXP)
+    @DateTimeFormat(pattern = DtoConstants.TIME_REGEXP)
     private LocalTime timeTo;
 
     private List<UUID> categoryIds;
