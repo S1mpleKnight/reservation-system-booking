@@ -23,13 +23,13 @@ public class ReservationOfferController {
 
     private final ReservationOfferService reservationOfferService;
 
-    @Secured(Authorities.VIEW_RESERVATION_OFFER)
+//    @Secured(Authorities.VIEW_RESERVATION_OFFER)
     @GetMapping(Url.ID)
     public ReservationOfferDto findById(@PathVariable UUID id) {
         return reservationOfferService.findById(id);
     }
 
-    @Secured(Authorities.VIEW_RESERVATION_OFFER)
+//    @Secured(Authorities.VIEW_RESERVATION_OFFER)
     @GetMapping
     public Page<ReservationOfferDto> findAll(
             @RequestParam(required = false) Pageable pageable, ReservationOfferFilter filter
