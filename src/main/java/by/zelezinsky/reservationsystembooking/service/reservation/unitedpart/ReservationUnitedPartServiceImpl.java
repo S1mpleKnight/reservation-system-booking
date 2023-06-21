@@ -3,6 +3,7 @@ package by.zelezinsky.reservationsystembooking.service.reservation.unitedpart;
 import by.zelezinsky.reservationsystembooking.dto.reservation.reservationunitedpart.ReservationUnitedPartDto;
 import by.zelezinsky.reservationsystembooking.dto.reservation.reservationunitedpart.ReservationUnitedPartDtoMapper;
 import by.zelezinsky.reservationsystembooking.entity.offer.ReservationOffer;
+import by.zelezinsky.reservationsystembooking.entity.offer.ReservationOfferStatus;
 import by.zelezinsky.reservationsystembooking.entity.reservation.ReservationUnitedPart;
 import by.zelezinsky.reservationsystembooking.exception.BadRequestException;
 import by.zelezinsky.reservationsystembooking.exception.NotFoundException;
@@ -45,6 +46,12 @@ public class ReservationUnitedPartServiceImpl implements ReservationUnitedPartSe
     @Override
     public ReservationUnitedPartDto create(UUID id, ReservationUnitedPartDto dto) {
         ReservationOffer offer = findOffer(id);
+        if (!offer.getOfferStatus().equals(ReservationOfferStatus.NOT_OPEN)) {
+            throw new BadRequestException("Can not create united parts in opened offer");
+        }
+        if (repository.existsByName(dto.getName())) {
+            throw new BadRequestException("Reservation united part with that name already exists");
+        }
         ReservationUnitedPart entity = mapper.toEntity(dto);
         entity.setOfferId(offer.getId());
         if (Objects.nonNull(dto.getParentId())) {
@@ -60,6 +67,9 @@ public class ReservationUnitedPartServiceImpl implements ReservationUnitedPartSe
     @Override
     public void delete(UUID id, UUID uuid) {
         ReservationOffer offer = findOffer(id);
+        if (!offer.getOfferStatus().equals(ReservationOfferStatus.NOT_OPEN)) {
+            throw new BadRequestException("Can not create united parts in opened offer");
+        }
         ReservationUnitedPart unitedPart = findUnitedPart(offer, uuid);
         if (reservationUnitRepository.existsByReservationUnitedPart(unitedPart)) {
             throw new BadRequestException("There are some reservation units in this united part");

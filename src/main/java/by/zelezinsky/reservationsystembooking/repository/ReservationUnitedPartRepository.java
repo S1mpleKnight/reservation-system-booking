@@ -16,4 +16,6 @@ public interface ReservationUnitedPartRepository extends JpaRepository<Reservati
     Optional<ReservationUnitedPart> findByOfferAndId(ReservationOffer offer, UUID id);
 
     Page<ReservationUnitedPart> findAllByOffer(ReservationOffer offer, Pageable pageable);
+
+    Boolean existsByName(String name);
 }

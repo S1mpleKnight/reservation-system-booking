@@ -3,9 +3,11 @@ package by.zelezinsky.reservationsystembooking.service.reservation.unit;
 import by.zelezinsky.reservationsystembooking.dto.reservation.reservationunit.ReservationUnitDto;
 import by.zelezinsky.reservationsystembooking.dto.reservation.reservationunit.ReservationUnitDtoMapper;
 import by.zelezinsky.reservationsystembooking.entity.offer.ReservationOffer;
+import by.zelezinsky.reservationsystembooking.entity.offer.ReservationOfferStatus;
 import by.zelezinsky.reservationsystembooking.entity.reservation.ReservationUnit;
 import by.zelezinsky.reservationsystembooking.entity.reservation.ReservationUnitType;
 import by.zelezinsky.reservationsystembooking.entity.reservation.ReservationUnitedPart;
+import by.zelezinsky.reservationsystembooking.exception.BadRequestException;
 import by.zelezinsky.reservationsystembooking.exception.NotFoundException;
 import by.zelezinsky.reservationsystembooking.repository.offer.ReservationOfferRepository;
 import by.zelezinsky.reservationsystembooking.repository.ReservationUnitRepository;
@@ -47,6 +49,9 @@ public class ReservationUnitServiceImpl implements ReservationUnitService {
     @Override
     public ReservationUnitDto create(UUID id, ReservationUnitDto dto) {
         ReservationOffer offer = findOffer(id);
+        if (!offer.getOfferStatus().equals(ReservationOfferStatus.NOT_OPEN)) {
+            throw new BadRequestException("Can not create units in opened offer");
+        }
         ReservationUnit entity = reservationUnitDtoMapper.toEntity(dto);
         setUnitedPart(dto, offer, entity);
         setUnitType(dto, offer, entity);
@@ -57,6 +62,9 @@ public class ReservationUnitServiceImpl implements ReservationUnitService {
     @Override
     public ReservationUnitDto update(UUID id, UUID uuid, ReservationUnitDto dto) {
         ReservationOffer offer = findOffer(id);
+        if (!offer.getOfferStatus().equals(ReservationOfferStatus.NOT_OPEN)) {
+            throw new BadRequestException("Can not update units in opened offer");
+        }
         ReservationUnit unit = findUnit(offer, uuid);
         unit = reservationUnitDtoMapper.toEntity(unit, dto);
         setUnitedPart(dto, offer, unit);

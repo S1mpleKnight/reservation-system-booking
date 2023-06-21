@@ -6,6 +6,7 @@ import by.zelezinsky.reservationsystembooking.dto.offer.reservationoffer.Reserva
 import by.zelezinsky.reservationsystembooking.dto.offer.reservationoffer.ReservationOfferDtoMapper;
 import by.zelezinsky.reservationsystembooking.entity.offer.*;
 import by.zelezinsky.reservationsystembooking.entity.user.User;
+import by.zelezinsky.reservationsystembooking.exception.BadRequestException;
 import by.zelezinsky.reservationsystembooking.exception.NotFoundException;
 import by.zelezinsky.reservationsystembooking.repository.*;
 import by.zelezinsky.reservationsystembooking.repository.UserRepository;
@@ -55,6 +56,16 @@ public class ReservationOfferServiceImpl implements ReservationOfferService {
     @Transactional
     public ReservationOfferDto update(UUID id, ReservationOfferDto dto) {
         ReservationOffer offer = findOffer(id);
+        if ((offer.getOfferStatus().equals(ReservationOfferStatus.OPEN)
+                && dto.getOfferStatus().equals(ReservationOfferStatus.CLOSED))
+                || (offer.getOfferStatus().equals(ReservationOfferStatus.NOT_OPEN)
+                && dto.getOfferStatus().equals(ReservationOfferStatus.OPEN))) {
+            offer.setOfferStatus(ReservationOfferStatus.CLOSED);
+            return reservationOfferDtoMapper.toDto(reservationOfferRepository.save(offer));
+        }
+        if (!offer.getOfferStatus().equals(ReservationOfferStatus.NOT_OPEN)) {
+            throw new BadRequestException("Can not update opened offers");
+        }
         User user = findUser(dto.getContactId());
         offer = reservationOfferDtoMapper.toEntity(offer, dto);
         setOfferEvent(dto, offer);
