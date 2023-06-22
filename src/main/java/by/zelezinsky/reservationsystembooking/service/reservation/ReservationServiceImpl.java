@@ -1,7 +1,11 @@
 package by.zelezinsky.reservationsystembooking.service.reservation;
 
+import by.zelezinsky.reservationsystembooking.dto.offer.reservationoffer.ReservationOfferDtoMapper;
 import by.zelezinsky.reservationsystembooking.dto.reservation.ReservationDto;
 import by.zelezinsky.reservationsystembooking.dto.reservation.ReservationDtoMapper;
+import by.zelezinsky.reservationsystembooking.dto.reservation.reservationunit.ReservationInfoDto;
+import by.zelezinsky.reservationsystembooking.dto.reservation.reservationunit.ReservationUnitDtoMapper;
+import by.zelezinsky.reservationsystembooking.dto.user.user.UserDtoMapper;
 import by.zelezinsky.reservationsystembooking.entity.offer.ReservationOffer;
 import by.zelezinsky.reservationsystembooking.entity.reservation.Reservation;
 import by.zelezinsky.reservationsystembooking.entity.reservation.ReservationUnit;
@@ -22,10 +26,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,6 +41,9 @@ public class ReservationServiceImpl implements ReservationService {
     private final UserRepository userRepository;
     private final ReservationUnitRepository reservationUnitRepository;
     private final MailerSenderService mailerSenderService;
+    private final ReservationUnitDtoMapper reservationUnitDtoMapper;
+    private final ReservationOfferDtoMapper reservationOfferDtoMapper;
+    private final UserDtoMapper userDtoMapper;
 
     @Override
     public ReservationDto findById(UUID id) {
@@ -52,6 +56,25 @@ public class ReservationServiceImpl implements ReservationService {
             pageable = Pageable.unpaged();
         }
         return reservationRepository.findAll(pageable).map(reservationDtoMapper::toDto);
+    }
+
+    @Override
+    public List<ReservationInfoDto> findAllPersonal(String username) {
+        Optional<User> byUsername = userRepository.findByUsername(username);
+        if (byUsername.isEmpty()) {
+            throw new BadRequestException("User is not present");
+        }
+        User user = byUsername.get();
+        List<Reservation> allByUser = reservationRepository.findAllByUser(user);
+        return allByUser
+                .stream()
+                .map(reservation -> ReservationInfoDto.builder()
+                        .reservation(reservationDtoMapper.toDto(reservation))
+                        .unit(reservationUnitDtoMapper.toDto(reservation.getUnits().get(0)))
+                        .offer(reservationOfferDtoMapper.toDto(reservation.getUnits().get(0).getOffer()))
+                        .user(userDtoMapper.toPreviewDto(reservation.getUser()))
+                        .build())
+                .collect(Collectors.toList());
     }
 
     @Override

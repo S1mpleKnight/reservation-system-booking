@@ -58,6 +58,7 @@ public interface Url {
 
     interface Reservation {
         String BASE = "reservations/";
+        String PERSONAL = "personal/";
     }
 
     interface Country {

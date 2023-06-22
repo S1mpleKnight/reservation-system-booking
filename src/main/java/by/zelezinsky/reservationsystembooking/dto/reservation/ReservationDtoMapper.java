@@ -43,6 +43,8 @@ public interface ReservationDtoMapper {
     @Mapping(target = "reservationTime", ignore = true)
     Reservation toEntity(@MappingTarget Reservation reservation, ReservationDto dto);
 
+    List<ReservationDto > toDto(List<Reservation> dtos);
+
     @Named(QUALIFIER_UNIT_IDS)
     default List<UUID> getUnitIds(Reservation reservation) {
         return reservation.getUnits().stream().map(ReservationUnit::getId).collect(Collectors.toList());

@@ -2,6 +2,7 @@ package by.zelezinsky.reservationsystembooking.controller.reservation;
 
 import by.zelezinsky.reservationsystembooking.controller.Url;
 import by.zelezinsky.reservationsystembooking.dto.reservation.ReservationDto;
+import by.zelezinsky.reservationsystembooking.dto.reservation.reservationunit.ReservationInfoDto;
 import by.zelezinsky.reservationsystembooking.security.Authorities;
 import by.zelezinsky.reservationsystembooking.service.reservation.ReservationService;
 import jakarta.validation.Valid;
@@ -11,7 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
-
+import java.security.Principal;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -31,6 +33,12 @@ public class ReservationController {
     @GetMapping
     public Page<ReservationDto> findAll(@RequestParam(required = false) Pageable pageable) {
         return reservationService.findAll(pageable);
+    }
+
+    @Secured(Authorities.VIEW_RESERVATION)
+    @GetMapping(Url.Reservation.PERSONAL)
+    public List<ReservationInfoDto> findAllPersonal(Principal principal) {
+        return reservationService.findAllPersonal(principal.getName());
     }
 
     @Secured(Authorities.UPDATE_RESERVATION)
