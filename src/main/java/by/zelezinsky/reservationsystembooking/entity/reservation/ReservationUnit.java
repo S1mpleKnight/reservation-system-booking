@@ -29,19 +29,13 @@ public class ReservationUnit {
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-    @JoinColumn(name = "reservation_united_part_id", updatable = false, insertable = false)
+    @JoinColumn(name = "reservation_united_part_id")
     private ReservationUnitedPart reservationUnitedPart;
-
-    @Column(name = "reservation_united_part_id")
-    private UUID reservationUnitedPartId;
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reservation_offer_id", nullable = false, updatable = false, insertable = false)
+    @JoinColumn(name = "reservation_offer_id", nullable = false)
     private ReservationOffer offer;
-
-    @Column(name = "reservation_offer_id", nullable = false)
-    private UUID offerId;
 
     @Column(name = "has_time", nullable = false)
     private Boolean hasTime;
@@ -60,17 +54,11 @@ public class ReservationUnit {
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reservation_unit_type_id", insertable = false, updatable = false)
+    @JoinColumn(name = "reservation_unit_type_id")
     private ReservationUnitType reservationUnitType;
-
-    @Column(name = "reservation_unit_type_id")
-    private UUID reservationUnitTypeId;
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reservation_id", updatable = false, insertable = false)
+    @JoinColumn(name = "reservation_id")
     private Reservation reservation;
-
-    @Column(name = "reservation_id")
-    private UUID reservationId;
 }

@@ -55,7 +55,7 @@ public class ReservationUnitServiceImpl implements ReservationUnitService {
         ReservationUnit entity = reservationUnitDtoMapper.toEntity(dto);
         setUnitedPart(dto, offer, entity);
         setUnitType(dto, offer, entity);
-        entity.setOfferId(offer.getId());
+        entity.setOffer(offer);
         return reservationUnitDtoMapper.toDto(reservationUnitRepository.save(entity));
     }
 
@@ -102,7 +102,7 @@ public class ReservationUnitServiceImpl implements ReservationUnitService {
     private void setUnitedPart(ReservationUnitDto dto, ReservationOffer offer, ReservationUnit entity) {
         if (Boolean.TRUE.equals(dto.getHasUnitedPart())) {
             ReservationUnitedPart unitedPart = findUnitedPart(offer, dto.getReservationUnitedPartId());
-            entity.setReservationUnitedPartId(unitedPart.getId());
+            entity.setReservationUnitedPart(unitedPart);
             entity.setHasUnitedPart(Boolean.TRUE);
         } else {
             entity.setHasUnitedPart(Boolean.FALSE);
@@ -112,7 +112,7 @@ public class ReservationUnitServiceImpl implements ReservationUnitService {
     private void setUnitType(ReservationUnitDto dto, ReservationOffer offer, ReservationUnit entity) {
         if (Boolean.TRUE.equals(dto.getHasReservationUnitType())) {
             ReservationUnitType type = findType(offer, dto.getReservationUnitTypeId());
-            entity.setReservationUnitTypeId(type.getId());
+            entity.setReservationUnitType(type);
             entity.setHasReservationUnitType(Boolean.TRUE);
         } else {
             entity.setHasReservationUnitType(Boolean.FALSE);

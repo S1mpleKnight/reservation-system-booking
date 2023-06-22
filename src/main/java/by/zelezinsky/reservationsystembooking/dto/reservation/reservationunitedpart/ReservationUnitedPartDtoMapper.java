@@ -7,6 +7,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ReservationUnitedPartDtoMapper {
 
+    @Mapping(target = "units", ignore = true)
     @Mapping(target = "unitIds", ignore = true)
     @Mapping(target = "parts", ignore = true)
     ReservationUnitedPartDto toDto(ReservationUnitedPart unitedPart);

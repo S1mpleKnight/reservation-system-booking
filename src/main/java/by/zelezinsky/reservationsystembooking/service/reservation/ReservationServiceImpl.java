@@ -99,7 +99,7 @@ public class ReservationServiceImpl implements ReservationService {
     public void delete(UUID id) {
         Reservation reservation = findReservation(id);
         List<ReservationUnit> units = reservation.getUnits();
-        units.forEach(unit -> unit.setReservationId(null));
+        units.forEach(unit -> unit.setReservation(null));
         ReservationOffer offer = units.get(0).getOffer();
         String body = createMessageText(reservation, offer, DELETE_RESERVATION_MESSAGE);
         mailerSenderService.send(reservation.getUser().getEmail(), offer.getName(), body);
@@ -135,7 +135,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     private List<ReservationUnit> saveUnits(List<ReservationUnit> units, Reservation save) {
-        units.forEach(unit -> unit.setReservationId(save.getId()));
+        units.forEach(unit -> unit.setReservation(save));
         units = reservationUnitRepository.saveAll(units);
         return units;
     }
