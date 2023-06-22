@@ -93,4 +93,17 @@ public class ReservationOffer {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "offer")
     private List<ReservationUnitType> types;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ReservationOffer that)) return false;
+
+        return getId() != null ? getId().equals(that.getId()) : that.getId() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return getId() != null ? getId().hashCode() : 0;
+    }
 }

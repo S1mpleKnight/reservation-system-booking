@@ -50,4 +50,17 @@ public class User {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "contact")
     private List<ReservationOffer> offers;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User user)) return false;
+
+        return getId() != null ? getId().equals(user.getId()) : user.getId() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return getId() != null ? getId().hashCode() : 0;
+    }
 }

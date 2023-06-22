@@ -12,8 +12,6 @@ import org.mapstruct.MappingTarget;
         ReservationUnitedPartDtoMapper.class})
 public interface ReservationUnitDtoMapper {
 
-    @Mapping(target = "reservation", ignore = true)
-    @Mapping(target = "reservationId", ignore = true)
     ReservationUnitDto toDto(ReservationUnit unit);
 
     @Mapping(target = "id", ignore = true)

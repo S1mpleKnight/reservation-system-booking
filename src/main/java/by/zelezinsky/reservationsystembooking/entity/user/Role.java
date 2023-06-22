@@ -27,4 +27,17 @@ public class Role {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "role")
     private Set<Permission> permissions;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Role role)) return false;
+
+        return getId() != null ? getId().equals(role.getId()) : role.getId() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return getId() != null ? getId().hashCode() : 0;
+    }
 }
