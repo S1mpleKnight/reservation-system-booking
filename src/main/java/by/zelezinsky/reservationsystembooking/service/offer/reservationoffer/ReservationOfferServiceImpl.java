@@ -46,10 +46,11 @@ public class ReservationOfferServiceImpl implements ReservationOfferService {
         entity.setContact(user);
         setOfferEvent(dto, entity);
         setOfferEstablishment(dto, entity);
-        setOfferAdditionalInfo(dto, entity);
         setOfferCategories(dto, entity);
         entity.setOfferStatus(ReservationOfferStatus.NOT_OPEN);
-        return reservationOfferDtoMapper.toDto(reservationOfferRepository.save(entity));
+        ReservationOffer saved = reservationOfferRepository.save(entity);
+        setOfferAdditionalInfo(dto, saved);
+        return reservationOfferDtoMapper.toDto(saved);
     }
 
     @Override
@@ -163,8 +164,9 @@ public class ReservationOfferServiceImpl implements ReservationOfferService {
     private void setOfferAdditionalInfo(ReservationOfferDto dto, ReservationOffer entity) {
         if (Boolean.TRUE.equals(dto.getHasAdditionalInfo())) {
             AdditionalOfferInfo info = additionalOfferInfoDtoMapper.toEntity(dto.getAdditionalOfferInfo());
-            entity.setInfo(info);
             info.setOffer(entity);
+            info = additionalOfferInfoRepository.save(info);
+            entity.setInfo(info);
             entity.setHasAdditionalInfo(Boolean.TRUE);
         } else {
             entity.setHasAdditionalInfo(Boolean.FALSE);
